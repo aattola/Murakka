@@ -253,6 +253,7 @@ src/.env
 .env.test
 
 src/.env
+.env
 
 dist
 /dist
