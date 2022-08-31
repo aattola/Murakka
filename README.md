@@ -1,15 +1,21 @@
-# typescript-eslint-prettier
+# Murakka
 
-> This is a template repository for fast development using nodejs, ts, eslint and prettier
+> Seuraavan tason Discord musiikkibotti
 
-## Init
+## Totuus
+
+Ei ole
+
+## Käynnistys
 
 ```sh
-yarn init
+yarn install
 ```
 
-## Dictionary structure
+Laita env variablet paikalleen .env tiedostoon
 
-- Root
-  - src: TypeScript source files
-  - build: TypeScript output (ignored by git)
+```sh
+yarn dev
+```
+
+Nauti
