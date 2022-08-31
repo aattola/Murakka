@@ -8,6 +8,6 @@ import { Client } from 'discord.js'
 export class UserEvent extends Listener {
   public run(client: Client) {
     const { username, id } = client.user!
-    this.container.logger.info(`Successfully logged in as ${username} (${id})`)
+    this.container.logger.info(`Kirjauduttu sisään! ${username} (${id})`)
   }
 }
