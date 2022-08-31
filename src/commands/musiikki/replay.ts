@@ -32,6 +32,9 @@ export class ReplayCommand extends Command {
 
     await interaction.deferReply({ ephemeral: true })
 
-    await haeJaSoita(interaction, `JFFe___________${lastPlayedId}`)
+    await haeJaSoita(
+      interaction,
+      `https://www.youtube.com/watch?v=${lastPlayedId}`
+    )
   }
 }
