@@ -8,15 +8,7 @@ declare module '@sapphire/pieces' {
 }
 
 function initPlayer(client: SapphireClient) {
-  container.player = new Player(client, {
-    ytdlOptions: {
-      requestOptions: {
-        headers: {
-          cookie: process.env.YOUTUBE_COOKIE ?? null
-        }
-      }
-    }
-  })
+  container.player = new Player(client)
 }
 
 export { initPlayer }

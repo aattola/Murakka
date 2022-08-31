@@ -16,6 +16,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
     "@discordjs/opus": "^0.8.0",
+    "@keyv/redis": "^2.5.0",
     "@sapphire/decorators": "^5.0.0",
     "@sapphire/discord-utilities": "next",
     "@sapphire/discord.js-utilities": "next",
@@ -35,6 +36,8 @@
     "discord.js": "^13.10.2",
     "dotenv": "^16.0.1",
     "humanize-duration": "^3.27.3",
+    "keyv": "^4.4.1",
+    "play-dl": "^1.9.5",
     "undici": "^5.10.0",
     "youtube-sr": "^4.3.4"
   },

@@ -74,7 +74,6 @@ export class CommandErrorListener extends Listener<
     { command, interaction }: ChatInputCommandErrorPayload
   ) {
     const { logger, client } = this.container
-
     if (typeof error === 'string') return this.stringError(interaction, error)
     if (error instanceof UserError) return this.userError(interaction, error)
 

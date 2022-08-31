@@ -31,7 +31,9 @@ export class HakusanaAutocompleteHandler extends InteractionHandler {
     try {
       if (focusedOption.name === 'hakusana') {
         if (!focusedOption.value || focusedOption.value === '') {
-          return this.none()
+          return this.some([
+            { name: 'Hae nyt jotain', value: 'JFFe___________SqMRyyL958w' }
+          ])
         }
 
         const videos = await YouTube.search(focusedOption.value, {

@@ -1,9 +1,11 @@
-import { SapphireClient } from '@sapphire/framework'
+import { container, SapphireClient } from '@sapphire/framework'
 
 import '@sapphire/plugin-api/register'
 import '@sapphire/plugin-logger/register'
 import dotenv from 'dotenv'
-import { initPlayer } from './player/init'
+import { initPlayer } from './init/player'
+import { initKeyv } from './init/keyv'
+import { initSoittaminen } from './player/soittaminen'
 
 dotenv.config()
 
@@ -17,5 +19,7 @@ const client = new SapphireClient({
 })
 
 initPlayer(client)
+initKeyv()
+initSoittaminen(container.player)
 
 void client.login(process.env.DISCORD_TOKEN)
