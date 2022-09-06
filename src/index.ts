@@ -11,7 +11,16 @@ dotenv.config()
 
 const client = new SapphireClient({
   intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES'],
-  loadDefaultErrorListeners: false
+  loadDefaultErrorListeners: false,
+  presence: {
+    status: 'online',
+    activities: [
+      {
+        name: 'Kanglu menot 7.10.22',
+        type: 'COMPETING'
+      }
+    ]
+  }
   // logger: {
   //   level:
   //     process.env.NODE_ENV !== 'production' ? LogLevel.Debug : LogLevel.Info
