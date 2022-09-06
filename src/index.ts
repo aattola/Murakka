@@ -17,7 +17,7 @@ const client = new SapphireClient({
     activities: [
       {
         name: 'Kanglu menot 7.10.22',
-        type: 'COMPETING'
+        type: 'WATCHING'
       }
     ]
   }
