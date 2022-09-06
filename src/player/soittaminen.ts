@@ -1,8 +1,4 @@
-import {
-  CommandInteraction,
-  GuildTextBasedChannel,
-  MessageEmbed
-} from 'discord.js'
+import { CommandInteraction, GuildTextBasedChannel, MessageEmbed } from 'discord.js'
 import { container } from '@sapphire/framework'
 import { Player, Track } from 'discord-player'
 import playdl from 'play-dl'
@@ -19,8 +15,7 @@ function nytSoiViesti(nowPlaying: Track): MessageEmbed {
 }
 
 function parseYoutubeUrl(url: string): string | false {
-  const regExp =
-    /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
+  const regExp = /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/
   const match = url.match(regExp)
   return match && match[7].length == 11 ? match[7] : false
 }
@@ -65,16 +60,13 @@ async function haeJaSoita(interaction: CommandInteraction, hakusana: string) {
     // @ts-ignore
     async onBeforeCreateStream(track, source) {
       if (source === 'youtube') {
-        return (
-          await playdl.stream(track.url, { discordPlayerCompatibility: true })
-        ).stream
+        return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream
       }
     }
   })
 
   try {
-    if (!queue.connection)
-      await queue.connect(interaction.member.voice.channel!)
+    if (!queue.connection) await queue.connect(interaction.member.voice.channel!)
   } catch {
     queue.destroy()
     return await interaction.followUp({
@@ -95,6 +87,7 @@ async function haeJaSoita(interaction: CommandInteraction, hakusana: string) {
       ephemeral: true
     })
 
+  queue.setVolume(20)
   await queue.play(track)
 
   return await interaction.followUp({

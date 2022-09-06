@@ -12,7 +12,9 @@ export class ReplayCommand extends Command {
   public override registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(
       (builder) => builder.setName(this.name).setDescription(this.description),
-      { idHints: ['1014567980069290114'] }
+      {
+        idHints: ['1014567980069290114']
+      }
     )
   }
 
@@ -23,8 +25,7 @@ export class ReplayCommand extends Command {
 
     if (!lastPlayedId) {
       throw new UserError({
-        message:
-          'Mitään ei ole soitettu ennen joten huono soittaa äskeisintä uudestaan.',
+        message: 'Mitään ei ole soitettu ennen joten huono soittaa äskeisintä uudestaan.',
         identifier: 'JFF',
         context: { ephemeral: true }
       })
@@ -32,9 +33,6 @@ export class ReplayCommand extends Command {
 
     await interaction.deferReply({ ephemeral: true })
 
-    await haeJaSoita(
-      interaction,
-      `https://www.youtube.com/watch?v=${lastPlayedId}`
-    )
+    await haeJaSoita(interaction, `https://www.youtube.com/watch?v=${lastPlayedId}`)
   }
 }
