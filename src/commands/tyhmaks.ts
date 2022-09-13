@@ -5,12 +5,9 @@ export class Tyhmaks extends Command {
     super(context, { ...options })
   }
 
-  public override registerApplicationCommands(
-    registry: ChatInputCommand.Registry
-  ) {
+  public override registerApplicationCommands(registry: ChatInputCommand.Registry) {
     registry.registerChatInputCommand(
-      (builder) =>
-        builder.setName('tyhmaks').setDescription('tyhmaks made me do it'),
+      (builder) => builder.setName('tyhmaks').setDescription('tyhmaks made me do it'),
       {
         idHints: ['1014204242858360982']
       }
@@ -33,8 +30,7 @@ export class Tyhmaks extends Command {
 
     if (!interaction.member) return
     try {
-      if (!queue.connection)
-        await queue.connect(interaction.member.voice.channel!)
+      if (!queue.connection) await queue.connect(interaction.member.voice.channel!)
     } catch {
       queue.destroy()
       return await interaction.reply({
@@ -53,7 +49,9 @@ export class Tyhmaks extends Command {
         content: `❌ | Track **** not found!`
       })
 
-    await queue.play(track)
+    await queue.play(track, {
+      immediate: true
+    })
 
     await interaction.followUp('kissa')
   }
