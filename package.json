@@ -41,11 +41,6 @@
     "undici": "^5.10.0",
     "youtube-sr": "^4.3.4"
   },
-  "overrides": {
-    "discord-player": {
-      "ytdl-core": "4.11.2"
-    }
-  },
   "scripts": {
     "build": "tsup",
     "watch": "tsup --watch",
