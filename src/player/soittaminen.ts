@@ -22,7 +22,9 @@ function parseYoutubeUrl(url: string): string | false {
 
 function initSoittaminen(player: Player) {
   player.on('trackStart', (queue, track) => {
-    const metadata = queue.metadata as { channel: GuildTextBasedChannel }
+    const metadata = queue.metadata as { channel: GuildTextBasedChannel; silent?: boolean }
+
+    if (metadata.silent) return
 
     const embed = nytSoiViesti(track)
     void metadata.channel.send({ embeds: [embed] })
