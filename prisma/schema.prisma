@@ -1,0 +1,21 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+model Blokattu {
+  id  Int @id @default(autoincrement())
+  hash String @unique
+  url String
+  timestamp DateTime @default(now())
+  blockerId String
+  blockerName String
+  posterId String
+  posterName String
+}
