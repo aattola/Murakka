@@ -50,6 +50,7 @@
     "build": "tsup",
     "watch": "tsup --watch",
     "start": "node dist/index.js",
-    "dev": "tsup --watch --onSuccess \"node ./dist/index.js\""
+    "dev": "tsup --watch --onSuccess \"node ./dist/index.js\"",
+    "prisma:generate": "prisma generate"
   }
 }

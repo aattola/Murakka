@@ -15,4 +15,6 @@ COPY . .
 
 RUN yarn build
 
+RUN yarn prisma:generate
+
 CMD node dist/index.js
