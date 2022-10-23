@@ -17,7 +17,7 @@ const client = new SapphireClient({
     status: 'online',
     activities: [
       {
-        name: 'Nuorena lähti...',
+        name: 'RAMSES II AGT ',
         type: 'WATCHING'
       }
     ]
