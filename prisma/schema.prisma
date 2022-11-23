@@ -19,3 +19,16 @@ model Blokattu {
   posterId String
   posterName String
 }
+
+model Gamba {
+  id  Int @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  gambaajanId String
+  gambaajanname String
+  peliId String
+  peliNimi String
+  tiimiId String
+  tiimiNimi String
+  betti Int
+  viestinId String
+}
