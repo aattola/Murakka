@@ -3,7 +3,6 @@ import { Listener, ListenerOptions } from '@sapphire/framework'
 import { Client } from 'discord.js'
 import { fetchBlocklist } from '../lib/block'
 import { initFifa } from '../lib/fifa'
-import { initSentry } from '../init/sentry'
 
 @ApplyOptions<ListenerOptions>({
   event: 'ready'
@@ -15,6 +14,5 @@ export class UserEvent extends Listener {
 
     void fetchBlocklist()
     void initFifa()
-    initSentry()
   }
 }
