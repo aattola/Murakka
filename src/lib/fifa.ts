@@ -10,6 +10,9 @@ const ably = new Ably.Realtime({
   autoConnect: true
 })
 
+let lopetusIlmoitusCache: any[] = []
+let aloitusIlmoitusCache: any[] = []
+
 ably.connection.on('disconnected', (connectionStateChange) => {
   container.logger.info('Ably::connection: Disconnected')
   if (connectionStateChange.reason?.code === 80002) return ably.connect()
@@ -58,6 +61,9 @@ async function initFifa() {
       const parse = loppuShape.safeParse(message.data)
       if (!parse.success) return console.log('Jokin puuttuu', parse.error)
 
+      if (lopetusIlmoitusCache.includes(parse.data.id))
+        return container.logger.warn('Melkein kaksi kertaa ohi ilmoitus ', parse.data.id)
+
       const value =
         parse.data.homeScore === parse.data.awayScore
           ? `Tasapeli kukaan bozo ei voita mitään. Vaan saa rahat takaisin`
@@ -70,6 +76,7 @@ async function initFifa() {
         .setDescription(`${parse.data.home} vastaan ${parse.data.away} ${value}`)
 
       await kanava.send({ embeds: [embed] })
+      lopetusIlmoitusCache = [...lopetusIlmoitusCache, parse.data.id]
       await laskeVoitot(parse.data)
     })
     .then(() => container.logger.info('Ably::peliOhi: Yhdistetty'))
@@ -78,6 +85,9 @@ async function initFifa() {
     .subscribe(async (message) => {
       const parse = alkaaShape.safeParse(message.data)
       if (!parse.success) return console.log('Jokin puuttuu', parse.error)
+
+      if (aloitusIlmoitusCache.includes(parse.data.id))
+        return container.logger.warn('Melkein kaksi kertaa aloitus ilmoitus ', parse.data.id)
 
       const embed = new MessageEmbed()
         .setColor(0x0099ff)
@@ -99,6 +109,7 @@ async function initFifa() {
       ])
 
       await kanava.send({ embeds: [embed], components: [componentRow] })
+      aloitusIlmoitusCache = [...aloitusIlmoitusCache, parse.data.id]
     })
     .then(() => container.logger.info('Ably::peliAlkaa: Yhdistetty'))
 }
@@ -110,14 +121,15 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
   })
 
   let voittaja
-  if (data.homeScore === data.awayScore) {
-    voittaja = 'tasapeli'
-  }
 
   if (data.homeScore > data.awayScore) {
     voittaja = 'home'
   } else {
     voittaja = 'away'
+  }
+
+  if (data.homeScore === data.awayScore) {
+    voittaja = 'tasapeli'
   }
 
   const game = await container.prisma.gamba.findFirst({
