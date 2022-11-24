@@ -174,7 +174,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
   const kanava = await container.client.channels.fetch(FIFA_KANAVA)
   if (kanava?.isText()) {
     const msg = await kanava.messages.fetch(game.viestinId)
-    const voittajat = res.map((voittaja) => `${voittaja.gambaajanname}\n`)
+    const voittajat = res.map((voittaja) => `${voittaja.gambaajanname}`).join('\n')
     const embed = createFifaMessage(`${game.peliNimi} Peli ohi`, `Voittajat:\n ${voittajat}`)
     await msg.edit({ embeds: [embed], components: [] })
   }

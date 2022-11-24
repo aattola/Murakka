@@ -33,11 +33,13 @@ export class TiliCommand extends Command {
 
     if (!tili) return interaction.editReply({ content: 'Eihän sulla edes ole tiliä.' })
 
-    const tiliFormatted = tili.map((row) => {
-      return `${formatDistanceToNow(new Date(row.timestamp), { locale: fi })} sitten: ${
-        row.rahat
-      }€\n`
-    })
+    const tiliFormatted = tili
+      .map((row) => {
+        return `${formatDistanceToNow(new Date(row.timestamp), { locale: fi })} sitten: ${
+          row.rahat
+        }€`
+      })
+      .join(`\n`)
 
     await interaction.editReply({
       content: `<@${interaction.user.id}> tili:\n${tiliFormatted}`
