@@ -86,11 +86,17 @@ export class FifaBetButtons extends InteractionHandler {
         }
       })
 
+      if (tilanne && tilanne.rahat > 100) {
+        return interaction.editReply({
+          content: 'Sinulla ei ole rahaa tämmöiseen liikeeseen'
+        })
+      }
+
       const nykytilanne = await container.prisma.rahatilanne.create({
         data: {
           userId: interaction.user.id,
           userName: interaction.user.username,
-          rahat: tilanne ? tilanne.rahat + 200 : 400
+          rahat: tilanne ? tilanne.rahat - 100 : 400
         }
       })
 
