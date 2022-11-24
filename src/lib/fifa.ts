@@ -169,6 +169,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
 
     const nykytilanne = await container.prisma.rahatilanne.create({
       data: {
+        userName: voittaja1.gambaajanname,
         userId: voittaja1.gambaajanId,
         rahat: tilanne.rahat + 200
       }
