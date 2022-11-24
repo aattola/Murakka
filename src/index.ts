@@ -21,20 +21,6 @@ declare module '@sapphire/pieces' {
   }
 }
 
-Sentry.init({
-  dsn: 'https://ed8634031d35418f9c86536413fa8986@o124657.ingest.sentry.io/6710413',
-  integrations: [
-    new Tracing.Integrations.Prisma({ client: container.prisma }),
-    new ProfilingIntegration()
-  ],
-  tracesSampleRate: 1.0,
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  profilesSampleRate: 1.0
-})
-
-container.sentry = Sentry
-
 const client = new SapphireClient({
   intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES'],
   loadDefaultErrorListeners: false,
@@ -57,5 +43,19 @@ initPrisma()
 initPlayer(client)
 initKeyv()
 initSoittaminen(container.player)
+
+Sentry.init({
+  dsn: 'https://ed8634031d35418f9c86536413fa8986@o124657.ingest.sentry.io/6710413',
+  integrations: [
+    new Tracing.Integrations.Prisma({ client: container.prisma }),
+    new ProfilingIntegration()
+  ],
+  tracesSampleRate: 1.0,
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  profilesSampleRate: 1.0
+})
+
+container.sentry = Sentry
 
 void client.login(process.env.DISCORD_TOKEN)
