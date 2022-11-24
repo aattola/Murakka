@@ -1,6 +1,8 @@
 import { container } from '@sapphire/framework'
 import * as Sentry from '@sentry/node'
+import '@sentry/tracing'
 import * as Tracing from '@sentry/tracing'
+import { ProfilingIntegration } from '@sentry/profiling-node'
 
 declare module '@sapphire/pieces' {
   interface Container {
@@ -14,8 +16,12 @@ function initSentry() {
     tracesSampleRate: 1.0,
     integrations: [
       new Sentry.Integrations.Http({ tracing: true }),
-      new Tracing.Integrations.Prisma({ client: container.prisma })
-    ]
+      new Tracing.Integrations.Prisma({ client: container.prisma }),
+      new ProfilingIntegration()
+    ],
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    profilesSampleRate: 1.0
   })
 
   container.sentry = Sentry

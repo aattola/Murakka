@@ -32,6 +32,7 @@
     "@sapphire/type": "^2.2.4",
     "@sapphire/utilities": "^3.9.3",
     "@sentry/node": "^7.21.1",
+    "@sentry/profiling-node": "^0.0.12",
     "@sentry/tracing": "^7.21.1",
     "@types/humanize-duration": "^3.27.1",
     "@types/md5": "^2.3.2",
