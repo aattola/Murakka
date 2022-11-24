@@ -37,10 +37,9 @@ export class FifaBetButtons extends InteractionHandler {
       const stopTime = addHours(new Date(+timestamp * 1000), 2)
       const eroSekunneissa = differenceInSeconds(stopTime, new Date())
 
-      console.log(eroSekunneissa, timestamp, stopTime)
-      if (eroSekunneissa > 900) {
+      if (eroSekunneissa > 1800) {
         await interaction.editReply({
-          content: 'Et ehtinyt äänestämään 15 minuutin sisään viestin lähetyksestä. Vituttaako?'
+          content: 'Et ehtinyt äänestämään 30 minuutin sisään viestin lähetyksestä.'
         })
         return
       }

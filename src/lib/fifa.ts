@@ -83,7 +83,7 @@ async function initFifa() {
         .setColor(0x0099ff)
         .setTitle('Uusi peli alkaa!')
         .setURL('https://areena.yle.fi/tv/suorat/yle-tv2')
-        .setDescription(`${parse.data.home} vastaan ${parse.data.away}. 15 min aikaa bettailla`)
+        .setDescription(`${parse.data.home} vastaan ${parse.data.away}. 30 min aikaa bettailla`)
 
       const componentRow = new MessageActionRow().addComponents([
         new MessageButton()
