@@ -34,8 +34,10 @@ export class FifaBetButtons extends InteractionHandler {
 
       const [, , gameId, teamId, timestamp] = interaction.customId.split(':')
 
-      const stopTime = addHours(new Date(+timestamp * 1000), 2)
+      const stopTime = addHours(new Date(+timestamp * 1000), 0)
+
       const eroSekunneissa = differenceInSeconds(stopTime, new Date())
+      console.log(stopTime, new Date(+timestamp * 1000), eroSekunneissa, new Date())
 
       if (eroSekunneissa > 1800) {
         await interaction.editReply({
