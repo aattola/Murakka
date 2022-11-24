@@ -36,7 +36,7 @@ export class FifaBetButtons extends InteractionHandler {
 
       const stopTime = addHours(new Date(+timestamp * 1000), 0)
 
-      const eroSekunneissa = differenceInSeconds(stopTime, new Date())
+      const eroSekunneissa = differenceInSeconds(new Date(), stopTime)
       console.log(stopTime, new Date(+timestamp * 1000), eroSekunneissa, new Date())
 
       if (eroSekunneissa > 1800) {
