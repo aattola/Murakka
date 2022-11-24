@@ -1,8 +1,6 @@
 import * as Ably from 'ably/promises'
 import { container } from '@sapphire/framework'
 import { z } from 'zod'
-import formatDistance from 'date-fns/formatDistance'
-import { fi } from 'date-fns/locale'
 import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js'
 
 const FIFA_KANAVA = '1045011711796719677'
@@ -81,13 +79,11 @@ async function initFifa() {
       const parse = alkaaShape.safeParse(message.data)
       if (!parse.success) return console.log('Jokin puuttuu', parse.error)
 
-      const aika = formatDistance(parse.data.timestamp, parse.data.voteEnds, { locale: fi })
-
       const embed = new MessageEmbed()
         .setColor(0x0099ff)
         .setTitle('Uusi peli alkaa!')
         .setURL('https://areena.yle.fi/tv/suorat/yle-tv2')
-        .setDescription(`${parse.data.home} vastaan ${parse.data.away}. Bettaamiseen aikaa ${aika}`)
+        .setDescription(`${parse.data.home} vastaan ${parse.data.away}. 15 min aikaa bettailla`)
 
       const componentRow = new MessageActionRow().addComponents([
         new MessageButton()
