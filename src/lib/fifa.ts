@@ -64,18 +64,18 @@ async function initFifa() {
       if (lopetusIlmoitusCache.includes(parse.data.id))
         return container.logger.warn('Melkein kaksi kertaa ohi ilmoitus ', parse.data.id)
 
-      const value =
-        parse.data.homeScore === parse.data.awayScore
-          ? `Tasapeli kukaan bozo ei voita mitään. Vaan saa rahat takaisin`
-          : `\n${parse.data.homeScore} - ${parse.data.awayScore}. Voittoja lasketaan ja tilitetään.`
+      // const value =
+      //   parse.data.homeScore === parse.data.awayScore
+      //     ? `Tasapeli kukaan bozo ei voita mitään. Vaan saa rahat takaisin`
+      //     : `\n${parse.data.homeScore} - ${parse.data.awayScore}. Voittoja lasketaan ja tilitetään.`
 
-      const embed = new MessageEmbed()
-        .setColor(0x0099ff)
-        .setTitle('Peli loppui!')
-        .setURL('https://areena.yle.fi/tv/suorat/yle-tv2')
-        .setDescription(`${parse.data.home} vastaan ${parse.data.away} ${value}`)
-
-      await kanava.send({ embeds: [embed] })
+      // const embed = new MessageEmbed()
+      //   .setColor(0x0099ff)
+      //   .setTitle('Peli loppui!')
+      //   .setURL('https://areena.yle.fi/tv/suorat/yle-tv2')
+      //   .setDescription(`${parse.data.home} vastaan ${parse.data.away} ${value}`)
+      //
+      // await kanava.send({ embeds: [embed] })
       lopetusIlmoitusCache = [...lopetusIlmoitusCache, parse.data.id]
       await laskeVoitot(parse.data)
     })
@@ -143,6 +143,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
   }
 
   const tiimiId = voittaja === 'home' ? data.homeId : data.awayId
+  const kanava = await container.client.channels.fetch(FIFA_KANAVA)
 
   if (voittaja === 'tasapeli') {
     const res = await container.prisma.gamba.findMany({
@@ -172,6 +173,15 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
       }
     }
 
+    if (kanava?.isText()) {
+      const msg = await kanava.messages.fetch(game.viestinId)
+      const embed = createFifaMessage(
+        `${game.peliNimi} Peli ohi`,
+        `Tasapeli kukaan ei voittanut mitään`
+      )
+      await msg.edit({ embeds: [embed], components: [] })
+    }
+
     transaction.finish()
     return container.logger.warn('Rahat palautettu')
   }
@@ -183,7 +193,6 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
     }
   })
 
-  const kanava = await container.client.channels.fetch(FIFA_KANAVA)
   if (kanava?.isText()) {
     const msg = await kanava.messages.fetch(game.viestinId)
     const voittajat = res.map((voittaja) => `${voittaja.gambaajanname}`).join('\n')
