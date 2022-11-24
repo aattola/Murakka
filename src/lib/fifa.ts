@@ -18,6 +18,13 @@ ably.connection.on('disconnected', (connectionStateChange) => {
   if (!connectionStateChange.retryIn) return ably.connect()
 })
 
+const createFifaMessage = (title: string, text: string): MessageEmbed =>
+  new MessageEmbed()
+    .setColor(0x0099ff)
+    .setTitle(title)
+    .setURL('https://areena.yle.fi/tv/suorat/yle-tv2')
+    .setDescription(text)
+
 const alkaaShape = z
   .object({
     id: z.string(),
@@ -56,7 +63,7 @@ async function initFifa() {
       const value =
         parse.data.homeScore === parse.data.awayScore
           ? `Tasapeli kukaan bozo ei voita mitään. Vaan saa rahat takaisin`
-          : `${parse.data.homeScore} ${parse.data.awayScore}. Voittoja lasketaan ja tilitetään ja tälleen tiiät kyl veli wallah xalolit on vitun cap wallah wallah nyt usko mua`
+          : `\n${parse.data.homeScore} - ${parse.data.awayScore}. Voittoja lasketaan ja tilitetään.`
 
       const embed = new MessageEmbed()
         .setColor(0x0099ff)
@@ -85,12 +92,12 @@ async function initFifa() {
       const componentRow = new MessageActionRow().addComponents([
         new MessageButton()
           .setLabel(`${parse.data.home} voittaa`)
-          .setCustomId(`gamba:bet:${parse.data.id}:${parse.data.homeId}`)
+          .setCustomId(`gamba:bet:${parse.data.id}:${parse.data.homeId}:${parse.data.timestamp}`)
           .setEmoji('975838734954143814')
           .setStyle('SECONDARY'),
         new MessageButton()
           .setLabel(`${parse.data.away} voittaa`)
-          .setCustomId(`gamba:bet:${parse.data.id}:${parse.data.awayId}`)
+          .setCustomId(`gamba:bet:${parse.data.id}:${parse.data.awayId}:${parse.data.timestamp}`)
           .setEmoji('934146890344333422')
           .setStyle('SECONDARY')
       ])
@@ -119,15 +126,9 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
   })
   if (!game) return container.logger.info('kukaan ei gambannut')
 
-  // if (voittaja === 'tasapeli') {
-  //   const kanava = await container.client.channels.fetch(FIFA_KANAVA)
-  //   if (kanava?.isText()) {
-  //     const msg = await kanava.messages.fetch(game.viestinId)
-  //     await msg.edit(`${msg.content} Tasapeli kaikki saa rahat takaisin! jee kivaa :)))`)
-  //   }
-  // }
-
   const tiimiId = voittaja === 'home' ? data.homeId : data.awayId
+
+  if (voittaja === 'tasapeli') return container.logger.warn('ei voittajia! tasapeli')
 
   const res = await container.prisma.gamba.findMany({
     where: {
@@ -136,16 +137,45 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
     }
   })
 
+  const kanava = await container.client.channels.fetch(FIFA_KANAVA)
+  if (kanava?.isText()) {
+    const msg = await kanava.messages.fetch(game.viestinId)
+    const voittajat = res.map((voittaja) => `${voittaja.gambaajanname}\n`)
+    const embed = createFifaMessage(`${game.peliNimi} Peli ohi`, `Voittajat:\n ${voittajat}`)
+    await msg.edit({ embeds: [embed], components: [] })
+  }
+
   if (res.length === 0) return console.log('Kukaan ei voittanut :(')
 
   // voittajia
 
   for (const voittaja1 of res) {
+    const tilanne = await container.prisma.rahatilanne.findFirst({
+      where: {
+        userId: voittaja1.gambaajanId
+      },
+      orderBy: {
+        timestamp: 'desc'
+      }
+    })
     const user = await container.client.users.fetch(voittaja1.gambaajanId)
+
+    if (!tilanne) {
+      const eId = container.sentry.captureMessage(
+        `Hemmolla ${voittaja1.gambaajanId} ei ole rahaa??`
+      )
+      return await user.send(`Virhe tapahtui tilityksessä laita leeville koodi: ${eId}`)
+    }
+
+    const nykytilanne = await container.prisma.rahatilanne.create({
+      data: {
+        userId: voittaja1.gambaajanId,
+        rahat: tilanne.rahat + 200
+      }
+    })
+
     await user.send(
-      'Hei sää voitit jotakin en tiedä mitä mutta jotakin voitit. tossa tietokannasta dumppi ```' +
-        JSON.stringify(voittaja1) +
-        '´´´'
+      `Hei sää tuplasit 100€ eli pitkällä matikalla laskettuna sait 200€. Sinulla on nyt ${nykytilanne.rahat}`
     )
   }
 }

@@ -7,6 +7,7 @@ import { initPlayer } from './init/player'
 import { initKeyv } from './init/keyv'
 import { initSoittaminen } from './player/soittaminen'
 import { initPrisma } from './init/prisma'
+import { initSentry } from './init/sentry'
 
 dotenv.config()
 
@@ -28,9 +29,10 @@ const client = new SapphireClient({
   // }
 })
 
+initPrisma()
 initPlayer(client)
 initKeyv()
 initSoittaminen(container.player)
-initPrisma()
+initSentry()
 
 void client.login(process.env.DISCORD_TOKEN)

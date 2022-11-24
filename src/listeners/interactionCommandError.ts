@@ -6,26 +6,16 @@ import {
   ListenerOptions,
   UserError
 } from '@sapphire/framework'
-import {
-  ButtonInteraction,
-  DiscordAPIError,
-  HTTPError,
-  SelectMenuInteraction
-} from 'discord.js'
+import { ButtonInteraction, DiscordAPIError, HTTPError, SelectMenuInteraction } from 'discord.js'
 import { codeBlock, userMention } from '@discordjs/builders'
 import { RESTJSONErrorCodes } from 'discord-api-types/v10'
 
-const ignoredCodes = [
-  RESTJSONErrorCodes.UnknownChannel,
-  RESTJSONErrorCodes.UnknownMessage
-]
+const ignoredCodes = [RESTJSONErrorCodes.UnknownChannel, RESTJSONErrorCodes.UnknownMessage]
 
 @ApplyOptions<ListenerOptions>({
   event: 'interactionHandlerError'
 })
-export class CommandErrorListener extends Listener<
-  typeof Events.InteractionHandlerError
-> {
+export class CommandErrorListener extends Listener<typeof Events.InteractionHandlerError> {
   private getWarnError(interaction: ButtonInteraction | SelectMenuInteraction) {
     return `ERROR: /${interaction.guildId}/${interaction.channelId}/${interaction.id}`
   }
@@ -34,9 +24,16 @@ export class CommandErrorListener extends Listener<
     interaction: ButtonInteraction | SelectMenuInteraction,
     error: any
   ) {
+    const eventId = this.container.sentry.captureException(error, {
+      extra: {
+        interaction: interaction.toJSON(),
+        type: interaction.type
+      }
+    })
+
     if (interaction.user.id === '214760917810937856')
-      return codeBlock('js', error.stack!)
-    return `Hei nyt tapahtui yllättävä virhe voitko ilmoitella tästä eteenpäin?`
+      return `${codeBlock('js', error.stack!)}\neventId: ${eventId}`
+    return `Hei nyt tapahtui yllättävä virhe voitko ilmoitella tästä eteenpäin koodilla ${eventId}`
   }
 
   private reply(
@@ -56,26 +53,16 @@ export class CommandErrorListener extends Listener<
     })
   }
 
-  private stringError(
-    interaction: ButtonInteraction | SelectMenuInteraction,
-    error: string
-  ) {
-    return this.reply(
-      interaction,
-      `Hei ${userMention(interaction.user.id)}, ${error}`
-    )
+  private stringError(interaction: ButtonInteraction | SelectMenuInteraction, error: string) {
+    return this.reply(interaction, `Hei ${userMention(interaction.user.id)}, ${error}`)
   }
 
-  private userError(
-    interaction: ButtonInteraction | SelectMenuInteraction,
-    error: UserError
-  ) {
+  private userError(interaction: ButtonInteraction | SelectMenuInteraction, error: UserError) {
     if (Reflect.get(Object(error.context), 'silent')) return
 
     return this.reply(
       interaction,
-      error.message ||
-        `Virhe tapahtui josta palautuminen kestää 2-3 arkipäivää`,
+      error.message || `Virhe tapahtui josta palautuminen kestää 2-3 arkipäivää`,
       !!Reflect.get(Object(error.context), 'ephemeral')
     )
   }
@@ -83,17 +70,14 @@ export class CommandErrorListener extends Listener<
   public override async run(
     error: any,
     { interaction, handler }: InteractionHandlerError
-  ) {
+  ): Promise<any> {
     const { logger, client } = this.container
 
     if (interaction.isButton() || interaction.isSelectMenu()) {
       if (typeof error === 'string') return this.stringError(interaction, error)
       if (error instanceof UserError) return this.userError(interaction, error)
 
-      if (
-        error.name === 'AbortError' ||
-        error.message === 'Internal Server Error'
-      ) {
+      if (error.name === 'AbortError' || error.message === 'Internal Server Error') {
         logger.warn(
           `${this.getWarnError(interaction)} (${
             (interaction as ButtonInteraction | SelectMenuInteraction).user.id
@@ -110,6 +94,7 @@ export class CommandErrorListener extends Listener<
           return
         }
 
+        await this.reply(interaction, this.generateUnexpectedErrorMessage(interaction, error))
         client.emit(Events.Error, error)
       } else {
         logger.warn(
@@ -120,16 +105,9 @@ export class CommandErrorListener extends Listener<
       }
 
       // Emit where the error was emitted
-      logger.fatal(
-        `[Interaction] ${handler.location.full}\n${
-          error.stack || error.message
-        }`
-      )
+      logger.fatal(`[Interaction] ${handler.location.full}\n${error.stack || error.message}`)
       try {
-        await this.reply(
-          interaction,
-          this.generateUnexpectedErrorMessage(interaction, error)
-        )
+        await this.reply(interaction, this.generateUnexpectedErrorMessage(interaction, error))
       } catch (err) {
         client.emit(Events.Error, err as Error)
       }

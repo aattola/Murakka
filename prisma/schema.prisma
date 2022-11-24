@@ -32,3 +32,11 @@ model Gamba {
   betti Int
   viestinId String
 }
+
+model Rahatilanne {
+  id  Int @id @default(autoincrement())
+  timestamp DateTime @default(now())
+  userId String
+  userName String
+  rahat Int @default(500)
+}
