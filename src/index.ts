@@ -7,7 +7,6 @@ import { initPlayer } from './init/player'
 import { initKeyv } from './init/keyv'
 import { initSoittaminen } from './player/soittaminen'
 import { initPrisma } from './init/prisma'
-import { initSentry } from './init/sentry'
 
 dotenv.config()
 
@@ -33,6 +32,5 @@ initPrisma()
 initPlayer(client)
 initKeyv()
 initSoittaminen(container.player)
-initSentry()
 
 void client.login(process.env.DISCORD_TOKEN)

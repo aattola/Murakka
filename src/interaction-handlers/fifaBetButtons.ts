@@ -86,7 +86,7 @@ export class FifaBetButtons extends InteractionHandler {
         }
       })
 
-      if (tilanne && tilanne.rahat > 100) {
+      if (tilanne && tilanne.rahat < 100) {
         return interaction.editReply({
           content: 'Sinulla ei ole rahaa tämmöiseen liikeeseen'
         })
