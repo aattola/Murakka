@@ -35,9 +35,8 @@ export class TiliCommand extends Command {
 
     const tiliFormatted = tili
       .map((row) => {
-        return `${formatDistanceToNow(new Date(row.timestamp), { locale: fi })} sitten: ${
-          row.rahat
-        }€`
+        const date = formatDistanceToNow(new Date(row.timestamp), { locale: fi })
+        return `${date} sitten: ${row.rahat}€`
       })
       .join(`\n`)
 
