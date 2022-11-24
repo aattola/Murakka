@@ -6,7 +6,7 @@ import {
 } from '@sapphire/framework'
 import type { ButtonInteraction } from 'discord.js'
 import { fetch } from 'undici'
-import { differenceInSeconds } from 'date-fns'
+import { addHours, differenceInSeconds } from 'date-fns'
 
 async function fetchGame(id: string) {
   const res = await fetch(`https://fifa.jeffe.co/peli/${id}`)
@@ -34,8 +34,10 @@ export class FifaBetButtons extends InteractionHandler {
 
       const [, , gameId, teamId, timestamp] = interaction.customId.split(':')
 
-      const eroSekunneissa = differenceInSeconds(new Date(), new Date(timestamp))
+      const stopTime = addHours(new Date(+timestamp * 1000), 2)
+      const eroSekunneissa = differenceInSeconds(stopTime, new Date())
 
+      console.log(eroSekunneissa, timestamp, stopTime)
       if (eroSekunneissa > 900) {
         await interaction.editReply({
           content: 'Et ehtinyt äänestämään 15 minuutin sisään viestin lähetyksestä. Vituttaako?'
