@@ -104,6 +104,11 @@ async function initFifa() {
 }
 
 async function laskeVoitot(data: z.infer<typeof loppuShape>) {
+  const transaction = container.sentry.startTransaction({
+    op: 'transaction',
+    name: 'Laske voitot ' + data.id
+  })
+
   let voittaja
   if (data.homeScore === data.awayScore) {
     voittaja = 'tasapeli'
@@ -120,11 +125,44 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
       peliId: data.id
     }
   })
-  if (!game) return container.logger.info('kukaan ei gambannut')
+  if (!game) {
+    transaction.finish()
+    return container.logger.info('kukaan ei gambannut')
+  }
 
   const tiimiId = voittaja === 'home' ? data.homeId : data.awayId
 
-  if (voittaja === 'tasapeli') return container.logger.warn('ei voittajia! tasapeli')
+  if (voittaja === 'tasapeli') {
+    const res = await container.prisma.gamba.findMany({
+      where: {
+        peliId: data.id
+      }
+    })
+
+    if (res) {
+      for (const gamba of res) {
+        const tilanne = await container.prisma.rahatilanne.findFirst({
+          where: {
+            userId: gamba.gambaajanId
+          },
+          orderBy: {
+            timestamp: 'desc'
+          }
+        })
+
+        await container.prisma.rahatilanne.create({
+          data: {
+            userName: gamba.gambaajanname,
+            userId: gamba.gambaajanId,
+            rahat: tilanne!.rahat + 100
+          }
+        })
+      }
+    }
+
+    transaction.finish()
+    return container.logger.warn('Rahat palautettu')
+  }
 
   const res = await container.prisma.gamba.findMany({
     where: {
@@ -141,7 +179,10 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
     await msg.edit({ embeds: [embed], components: [] })
   }
 
-  if (res.length === 0) return console.log('Kukaan ei voittanut :(')
+  if (res.length === 0) {
+    transaction.finish()
+    return console.log('Kukaan ei voittanut :(')
+  }
 
   // voittajia
 
@@ -160,6 +201,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
       const eId = container.sentry.captureMessage(
         `Hemmolla ${voittaja1.gambaajanId} ei ole rahaa??`
       )
+      transaction.finish()
       return await user.send(`Virhe tapahtui tilityksessä laita leeville koodi: ${eId}`)
     }
 
@@ -175,6 +217,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
       `Hei sää tuplasit 100€ eli pitkällä matikalla laskettuna sait 200€. Sinulla on nyt ${nykytilanne.rahat}`
     )
   }
+  transaction.finish()
 }
 
 export { initFifa }
