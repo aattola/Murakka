@@ -6,8 +6,7 @@ import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js'
 const FIFA_KANAVA = '1045011711796719677'
 
 const ably = new Ably.Realtime({
-  key: process.env.ABLY_KEY!,
-  autoConnect: true
+  key: process.env.ABLY_KEY!
 })
 
 let lopetusIlmoitusCache: any[] = []
@@ -15,7 +14,6 @@ let aloitusIlmoitusCache: any[] = []
 
 ably.connection.on('disconnected', () => {
   container.logger.info('Ably::connection: Disconnected')
-  ably.close()
   return ably.connect()
 })
 
@@ -91,6 +89,8 @@ async function initFifa() {
 
   await channel
     .subscribe(async (message) => {
+      console.log('Ilmoitus uudesta pelistä datalla:', message.data)
+
       const parse = alkaaShape.safeParse(message.data)
       if (!parse.success) return console.log('Jokin puuttuu', parse.error)
 
