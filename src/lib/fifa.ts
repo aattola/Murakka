@@ -13,10 +13,18 @@ const ably = new Ably.Realtime({
 let lopetusIlmoitusCache: any[] = []
 let aloitusIlmoitusCache: any[] = []
 
-ably.connection.on('disconnected', (connectionStateChange) => {
+ably.connection.on('disconnected', () => {
   container.logger.info('Ably::connection: Disconnected')
-  if (connectionStateChange.reason?.code === 80002) return ably.connect()
-  if (!connectionStateChange.retryIn) return ably.connect()
+  ably.close()
+  return ably.connect()
+})
+
+ably.connection.on('connecting', (info) => {
+  container.logger.info('Ably::connection: Yhdistetään uudelleen. Ennen: ', info.previous)
+})
+
+ably.connection.on('connected', () => {
+  container.logger.info('Ably::connection: Yhdistetty')
 })
 
 const createFifaMessage = (title: string, text: string): MessageEmbed =>
