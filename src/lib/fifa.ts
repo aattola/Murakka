@@ -2,6 +2,7 @@ import * as Ably from 'ably/promises'
 import { container } from '@sapphire/framework'
 import { z } from 'zod'
 import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js'
+import { logger } from '../logger'
 
 const FIFA_KANAVA = '1045011711796719677'
 
@@ -13,16 +14,16 @@ let lopetusIlmoitusCache: any[] = []
 let aloitusIlmoitusCache: any[] = []
 
 ably.connection.on('disconnected', () => {
-  container.logger.info('Ably::connection: Disconnected')
+  logger.info('Ably::connection: Disconnected')
   return ably.connect()
 })
 
 ably.connection.on('connecting', (info) => {
-  container.logger.info('Ably::connection: Yhdistetään uudelleen. Ennen: ', info.previous)
+  logger.info('Ably::connection: Yhdistetään uudelleen. Ennen: ', info.previous)
 })
 
 ably.connection.on('connected', () => {
-  container.logger.info('Ably::connection: Yhdistetty')
+  logger.info('Ably::connection: Yhdistetty')
 })
 
 const createFifaMessage = (title: string, text: string): MessageEmbed =>
@@ -64,11 +65,13 @@ async function initFifa() {
 
   await overChannel
     .subscribe(async (message) => {
+      logger.info('Ilmoitus loppuneesta pelistä datalla:', message.data)
+
       const parse = loppuShape.safeParse(message.data)
-      if (!parse.success) return console.log('Jokin puuttuu', parse.error)
+      if (!parse.success) return logger.info('Jokin puuttuu', parse.error)
 
       if (lopetusIlmoitusCache.includes(parse.data.id))
-        return container.logger.warn('Melkein kaksi kertaa ohi ilmoitus ', parse.data.id)
+        return logger.warn('Melkein kaksi kertaa ohi ilmoitus ', parse.data.id)
 
       // const value =
       //   parse.data.homeScore === parse.data.awayScore
@@ -85,17 +88,17 @@ async function initFifa() {
       lopetusIlmoitusCache = [...lopetusIlmoitusCache, parse.data.id]
       await laskeVoitot(parse.data)
     })
-    .then(() => container.logger.info('Ably::peliOhi: Yhdistetty'))
+    .then(() => logger.info('Ably::peliOhi: Yhdistetty'))
 
   await channel
     .subscribe(async (message) => {
-      console.log('Ilmoitus uudesta pelistä datalla:', message.data)
+      logger.info('Ilmoitus uudesta pelistä datalla:', message.data)
 
       const parse = alkaaShape.safeParse(message.data)
-      if (!parse.success) return console.log('Jokin puuttuu', parse.error)
+      if (!parse.success) return logger.info('Jokin puuttuu', parse.error)
 
       if (aloitusIlmoitusCache.includes(parse.data.id))
-        return container.logger.warn('Melkein kaksi kertaa aloitus ilmoitus ', parse.data.id)
+        return logger.warn('Melkein kaksi kertaa aloitus ilmoitus ', parse.data.id)
 
       const embed = new MessageEmbed()
         .setColor(0x0099ff)
@@ -119,7 +122,7 @@ async function initFifa() {
       await kanava.send({ embeds: [embed], components: [componentRow] })
       aloitusIlmoitusCache = [...aloitusIlmoitusCache, parse.data.id]
     })
-    .then(() => container.logger.info('Ably::peliAlkaa: Yhdistetty'))
+    .then(() => logger.info('Ably::peliAlkaa: Yhdistetty'))
 }
 
 async function laskeVoitot(data: z.infer<typeof loppuShape>) {
@@ -147,7 +150,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
   })
   if (!game) {
     transaction.finish()
-    return container.logger.info('kukaan ei gambannut')
+    return logger.info('kukaan ei gambannut')
   }
 
   const tiimiId = voittaja === 'home' ? data.homeId : data.awayId
@@ -191,7 +194,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
     }
 
     transaction.finish()
-    return container.logger.warn('Rahat palautettu')
+    return logger.warn('Rahat palautettu')
   }
 
   const res = await container.prisma.gamba.findMany({
@@ -210,7 +213,7 @@ async function laskeVoitot(data: z.infer<typeof loppuShape>) {
 
   if (res.length === 0) {
     transaction.finish()
-    return console.log('Kukaan ei voittanut :(')
+    return logger.info('Kukaan ei voittanut :(')
   }
 
   // voittajia
