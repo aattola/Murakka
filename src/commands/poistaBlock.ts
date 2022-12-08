@@ -19,7 +19,7 @@ export class UserCommand extends Command {
           .addBooleanOption((option) => {
             return option.setName('md5').setDescription('Haetaanko md5').setRequired(true)
           }),
-      { idHints: ['1029137702349709475'] }
+      { idHints: ['1050407666486354021'] }
     )
   }
 

@@ -1,5 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import { Command, container } from '@sapphire/framework'
+import { PermissionFlagsBits } from 'discord-api-types/v10'
 
 @ApplyOptions<Command.Options>({
   name: 'asetukset',
@@ -18,8 +19,9 @@ export class UserCommand extends Command {
           })
           .addStringOption((option) => {
             return option.setName('val').setDescription('val').setRequired(true)
-          }),
-      { idHints: ['1029137701036884069'] }
+          })
+          .setDefaultMemberPermissions(PermissionFlagsBits.Administrator),
+      { idHints: ['1050407581958537276'] }
     )
   }
 

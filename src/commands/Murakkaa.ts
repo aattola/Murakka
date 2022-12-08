@@ -11,7 +11,7 @@ class UserCommand extends Command {
         name: this.name,
         type: 'MESSAGE'
       },
-      { idHints: ['1014204241641996379'] }
+      { idHints: ['1050407663818776577'] }
     )
   }
 

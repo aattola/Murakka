@@ -14,7 +14,7 @@ export class LeaveCommand extends Command {
         name: this.name,
         description: this.description
       },
-      { idHints: ['1014560347266482326'] }
+      { idHints: ['1050407485376319600'] }
     )
   }
 

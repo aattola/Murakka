@@ -22,7 +22,7 @@ export class VolumeCommand extends Command {
               .setMinValue(5)
               .setMaxValue(200)
           ),
-      { idHints: ['1014563295556014080'] }
+      { idHints: ['1050407569035903066'] }
     )
   }
 

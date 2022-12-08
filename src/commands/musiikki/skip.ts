@@ -14,7 +14,7 @@ export class SkipCommand extends Command {
         name: this.name,
         description: this.description
       },
-      { idHints: ['1014563294356439131'] }
+      { idHints: ['1050407484348710952'] }
     )
   }
 

@@ -23,15 +23,14 @@ export class UserCommand extends Command {
               .setMinValue(2)
           ),
       {
-        idHints: ['1014592779378229358']
+        idHints: ['1050407390744428605']
       }
     )
   }
 
   public async chatInputRun(interaction: Command.ChatInputInteraction) {
     await interaction.deferReply({ ephemeral: true })
-    if (!interaction.inCachedGuild())
-      throw new Error('Rare en tunne guildia error')
+    if (!interaction.inCachedGuild()) throw new Error('Rare en tunne guildia error')
 
     const montako = interaction.options.getInteger('numero')!
     const channel = interaction.channel!

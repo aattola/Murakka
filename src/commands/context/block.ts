@@ -15,7 +15,7 @@ export class UserCommand extends Command {
           .setName(this.name)
           .setType(ApplicationCommandType.Message),
 
-      { idHints: ['1029107441805299712'] }
+      { idHints: ['1050407389339320370'] }
     )
   }
 

@@ -25,7 +25,7 @@ export class SoitaCommand extends Command {
               .setRequired(true)
               .setAutocomplete(true)
           ),
-      { idHints: ['1014509195216818266'] }
+      { idHints: ['1050407481647566869'] }
     )
   }
 

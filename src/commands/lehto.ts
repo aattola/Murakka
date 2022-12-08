@@ -19,7 +19,7 @@ export class UserCommand extends Command {
             option.setName('viesti').setDescription('Viesti joka lähetetään').setRequired(true)
           ),
       {
-        idHints: ['1014947881519693864']
+        idHints: ['1050407580792533033']
       }
     )
   }

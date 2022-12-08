@@ -9,7 +9,7 @@ export class Tyhmaks extends Command {
     registry.registerChatInputCommand(
       (builder) => builder.setName('tyhmaks').setDescription('tyhmaks made me do it'),
       {
-        idHints: ['1014204242858360982']
+        idHints: ['1050407385904205866']
       }
     )
   }

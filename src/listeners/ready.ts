@@ -8,7 +8,7 @@ import { initFifa } from '../lib/fifa'
   event: 'ready'
 })
 export class UserEvent extends Listener {
-  public run(client: Client) {
+  public async run(client: Client) {
     const { username, id } = client.user!
     this.container.logger.info(`Kirjauduttu sisään! ${username} (${id})`)
 

@@ -14,7 +14,7 @@ export class TiliCommand extends Command {
         builder //
           .setName(this.name)
           .setDescription(this.description),
-      { idHints: ['1045324463866126366'] }
+      { idHints: ['1050407583300730901'] }
     )
   }
 
@@ -31,7 +31,7 @@ export class TiliCommand extends Command {
       take: 5
     })
 
-    if (!tili) return interaction.editReply({ content: 'Eihän sulla edes ole tiliä.' })
+    if (tili.length === 0) return interaction.editReply({ content: 'Eihän sulla edes ole tiliä.' })
 
     const tiliFormatted = tili
       .map((row) => {

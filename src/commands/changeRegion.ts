@@ -15,7 +15,7 @@ export class UserCommand extends Command {
         name: this.name,
         description: this.description
       },
-      { idHints: ['1014579689542664364'] }
+      { idHints: ['1050407387649015910'] }
     )
   }
 
@@ -35,10 +35,7 @@ export class UserCommand extends Command {
         .setCustomId('cr:choice')
         .setEmoji('762312767624708108')
         .setStyle('SECONDARY'),
-      new MessageButton()
-        .setLabel('Done')
-        .setCustomId('cr:removeMessage')
-        .setStyle('SECONDARY')
+      new MessageButton().setLabel('Done').setCustomId('cr:removeMessage').setStyle('SECONDARY')
     ])
 
     return interaction.followUp({

@@ -13,7 +13,7 @@ export class ReplayCommand extends Command {
     registry.registerChatInputCommand(
       (builder) => builder.setName(this.name).setDescription(this.description),
       {
-        idHints: ['1014567980069290114']
+        idHints: ['1050407487322456074']
       }
     )
   }

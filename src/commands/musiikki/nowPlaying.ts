@@ -12,7 +12,7 @@ export class NowPlayingCommand extends Command {
   public override registerApplicationCommands(registry: Command.Registry) {
     registry.registerChatInputCommand(
       (builder) => builder.setName(this.name).setDescription(this.description),
-      { idHints: ['1014565488677888000'] }
+      { idHints: ['1050407392338247680'] }
     )
   }
 

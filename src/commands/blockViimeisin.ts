@@ -19,7 +19,7 @@ export class UserCommand extends Command {
               .setDescription('Keneltä estetään tuo äskeinen roskapostaus')
               .setRequired(true)
           }),
-      { idHints: ['1029110437297533038'] }
+      { idHints: ['1050398850331971636'] }
     )
   }
 

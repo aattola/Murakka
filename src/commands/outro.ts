@@ -22,7 +22,7 @@ export class OutroCommand extends Command {
           option.setName('ihminen').setDescription('Kenelle outro tehdään').setRequired(false)
         )
     ),
-      { idHints: ['1020749125651812353'] }
+      { idHints: ['1050407665207087214'] }
   }
 
   public async chatInputRun(interaction: Command.ChatInputInteraction) {
