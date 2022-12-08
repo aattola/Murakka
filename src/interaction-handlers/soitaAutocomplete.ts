@@ -1,8 +1,4 @@
-import {
-  InteractionHandler,
-  InteractionHandlerTypes,
-  PieceContext
-} from '@sapphire/framework'
+import { InteractionHandler, InteractionHandlerTypes, PieceContext } from '@sapphire/framework'
 import type { AutocompleteInteraction } from 'discord.js'
 import YouTube from 'youtube-sr'
 
@@ -22,8 +18,8 @@ export class HakusanaAutocompleteHandler extends InteractionHandler {
   }
 
   public override async parse(interaction: AutocompleteInteraction) {
-    // komento id soita 1014509195216818266
-    if (interaction.commandId !== '1014509195216818266') return this.none()
+    // komento id soita 1050407481647566869
+    if (interaction.commandId !== '1050407481647566869') return this.none()
 
     // Get the focussed (current) option
     const focusedOption = interaction.options.getFocused(true)
@@ -31,9 +27,7 @@ export class HakusanaAutocompleteHandler extends InteractionHandler {
     try {
       if (focusedOption.name === 'hakusana') {
         if (!focusedOption.value || focusedOption.value === '') {
-          return this.some([
-            { name: 'Hae nyt jotain', value: 'JFFe___________SqMRyyL958w' }
-          ])
+          return this.some([{ name: 'Hae nyt jotain', value: 'JFFe___________SqMRyyL958w' }])
         }
 
         const videos = await YouTube.search(focusedOption.value, {
