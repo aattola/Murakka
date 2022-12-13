@@ -2,6 +2,7 @@
   "main": "dist/index.js",
   "devDependencies": {
     "@types/node": "^16.11.56",
+    "@types/node-cron": "^3.0.6",
     "@typescript-eslint/eslint-plugin": "^5.36.1",
     "@typescript-eslint/parser": "^5.36.1",
     "eslint": "8.22.0",
@@ -17,6 +18,7 @@
   "dependencies": {
     "@discordjs/builders": "^1.2.0",
     "@discordjs/opus": "^0.8.0",
+    "@jeffe/nordpool": "^2.0.0",
     "@keyv/redis": "^2.5.1",
     "@logtail/node": "^0.1.14",
     "@logtail/winston": "^0.1.14",
@@ -49,6 +51,7 @@
     "humanize-duration": "^3.27.3",
     "keyv": "^4.5.0",
     "md5": "^2.3.0",
+    "node-cron": "^3.0.2",
     "play-dl": "^1.9.5",
     "undici": "^5.10.0",
     "winston": "^3.8.2",
