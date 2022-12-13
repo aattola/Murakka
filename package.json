@@ -19,6 +19,7 @@
     "@discordjs/builders": "^1.2.0",
     "@discordjs/opus": "^0.8.0",
     "@jeffe/nordpool": "^2.0.0",
+    "@jeffe/tankille": "^1.1.4",
     "@keyv/redis": "^2.5.1",
     "@logtail/node": "^0.1.14",
     "@logtail/winston": "^0.1.14",
