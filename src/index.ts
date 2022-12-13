@@ -25,13 +25,13 @@ const client = new SapphireClient({
   intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES'],
   loadDefaultErrorListeners: false,
   presence: {
-    status: 'online',
-    activities: [
-      {
-        name: 'RAMSES II AGT ',
-        type: 'WATCHING'
-      }
-    ]
+    status: 'online'
+    // activities: [
+    //   {
+    //     name: 'RAMSES II AGT ',
+    //     type: 'WATCHING'
+    //   }
+    // ]
   }
   // logger: {
   //   level:
