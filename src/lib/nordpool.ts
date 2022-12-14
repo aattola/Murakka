@@ -3,6 +3,7 @@ import { getHourly } from '@jeffe/nordpool'
 import { formatISO, subHours } from 'date-fns'
 import { container } from '@sapphire/framework'
 import { logger } from '../logger'
+import { DateTime } from 'luxon'
 
 async function setCustomStatus() {
   const res = await getHourly({
@@ -12,7 +13,8 @@ async function setCustomStatus() {
   const result = formatISO(subHours(new Date(), 1)).split(':')[0]
 
   const currPrice = res.find((hourly) => {
-    return hourly.startTime.includes(result)
+    const time = DateTime.fromISO(hourly.startTime, { zone: 'Europe/Oslo' }).plus({ hours: 1 })
+    return time.diffNow('minutes').toObject().minutes! > 30
   })
 
   logger.info('setCustomStatus', {
@@ -32,4 +34,6 @@ export function initNordpool() {
   cron.schedule('*/15 * * * *', () => {
     void setCustomStatus()
   })
+
+  void setCustomStatus()
 }
