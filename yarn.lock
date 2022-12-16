@@ -151,13 +151,13 @@
   resolved "https://registry.npmjs.org/@ioredis/commands/-/commands-1.2.0.tgz"
   integrity sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==
 
-"@jeffe/nordpool@^2.0.0":
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/@jeffe/nordpool/-/nordpool-2.0.0.tgz#97274a8034b5686300044eb16fa4cfb3212d734f"
-  integrity sha512-MCLk0xZ10JjP1P2x9E+LdSkHvgqVEz61NreBgJC1v3xWtTt9Q8nUXVaXVhODOj73ZW1frLTEvGPDA/bV8TFg6g==
+"@jeffe/nordpool@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@jeffe/nordpool/-/nordpool-2.1.0.tgz#643b702df7858759ee988640de4f6bb6558d0761"
+  integrity sha512-FzLlomaQAFdSjmTzLmKhpDnqw7kkOQfLvdUT5T71WtO0PSmzCCjiybDyXqhU81G3q6xzktVgH4awsQpYjjPf/w==
   dependencies:
     axios "^0.27.2"
-    date-fns "^2.29.3"
+    luxon "^3.1.1"
 
 "@jeffe/tankille@^1.1.4":
   version "1.2.0"

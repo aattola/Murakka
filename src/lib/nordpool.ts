@@ -1,6 +1,5 @@
 import cron from 'node-cron'
 import { getHourly } from '@jeffe/nordpool'
-import { formatISO, subHours } from 'date-fns'
 import { container } from '@sapphire/framework'
 import { logger } from '../logger'
 import { DateTime } from 'luxon'
@@ -8,9 +7,9 @@ import { DateTime } from 'luxon'
 async function setCustomStatus() {
   const res = await getHourly({
     area: 'FI',
-    vat: 10
+    vat: 10,
+    timezone: 'Europe/Helsinki'
   })
-  const result = formatISO(subHours(new Date(), 1)).split(':')[0]
 
   const currPrice = res.find((hourly) => {
     const time = DateTime.fromISO(hourly.startTime, { zone: 'Europe/Oslo' }).plus({ hours: 1 })
@@ -18,12 +17,11 @@ async function setCustomStatus() {
   })
 
   logger.info('setCustomStatus', {
-    result,
     res,
     currPrice
   })
 
-  if (!currPrice) return console.log('Ei löytynyt hintaa. Mikä meni rikki?', result)
+  if (!currPrice) return console.log('Ei löytynyt hintaa. Mikä meni rikki?')
 
   container.client.user?.setActivity(`Sähkö ${currPrice.price} c/kWh`, { type: 'WATCHING' })
 }
