@@ -120,8 +120,14 @@ export class UserCommand extends Command {
 
     const listaaaa = [...list1, ...finalList]
 
+    let title = 'Haluatko tankata edullisesti? Onnea.'
+
+    if (interaction.user.id === '286963674990772226') {
+      title = 'Ok tankkaa sitä kiisseliä vaikka sitten. Onnea verojen maksamisessa.'
+    }
+
     const embed = new MessageEmbed()
-      .setTitle('Haluatko tankata edullisesti? Onnea.')
+      .setTitle(title)
       .setDescription(
         'Tuossa näkyy 95 ja kiisselin hinnat. Ekana kaksi halvinta viimeisenä kallein.'
       )
