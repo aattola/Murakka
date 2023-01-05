@@ -4,5 +4,6 @@ module.exports = {
   semi: false,
   singleQuote: true,
   printWidth: 100,
-  endOfLine: 'auto'
+  endOfLine: 'auto',
+  plugins: ["prettier-plugin-prisma"],
 }

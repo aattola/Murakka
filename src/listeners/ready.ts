@@ -2,7 +2,6 @@ import { ApplyOptions } from '@sapphire/decorators'
 import { Listener, ListenerOptions } from '@sapphire/framework'
 import { Client } from 'discord.js'
 import { fetchBlocklist } from '../lib/block'
-import { initFifa } from '../lib/fifa'
 import { initNordpool } from '../lib/nordpool'
 
 @ApplyOptions<ListenerOptions>({
@@ -15,6 +14,6 @@ export class UserEvent extends Listener {
 
     initNordpool()
     void fetchBlocklist()
-    void initFifa()
+    // void initFifa()
   }
 }
