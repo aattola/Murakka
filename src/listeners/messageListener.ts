@@ -10,7 +10,7 @@ import { handleKonna } from '../lib/konna'
 export class UserEvent extends Listener {
   public run(message: Message) {
     void container.keyv.set(`lastMessage:${message.author.id}`, message.content)
-    void checkMessage(message)
     void handleKonna(message)
+    void checkMessage(message)
   }
 }
