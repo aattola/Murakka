@@ -14,7 +14,7 @@ export class Tyhmaks extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const player = this.container.player
 
     if (!interaction.guild) return

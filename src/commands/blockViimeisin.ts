@@ -23,7 +23,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public override async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const user = interaction.options.getUser('kenelta', true)!
     const viesti: string | undefined = await container.keyv.get(`lastMessage:${user.id}`)
 

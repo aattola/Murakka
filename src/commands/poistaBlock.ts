@@ -23,7 +23,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public override async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public override async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     await interaction.deferReply()
     const input = interaction.options.getString('input')!
     const md5 = interaction.options.getBoolean('md5')!

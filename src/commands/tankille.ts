@@ -1,7 +1,7 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import { Command } from '@sapphire/framework'
 import type { Asema } from '@jeffe/tankille/build/main/types/client'
-import { MessageActionRow, MessageButton, MessageEmbed } from 'discord.js'
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle, EmbedBuilder } from 'discord.js'
 import { tankille } from '../init/tankille'
 
 @ApplyOptions<Command.Options>({
@@ -16,7 +16,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     await interaction.deferReply({ ephemeral: false })
 
     const data = await tankille.getStationsByLocation(
@@ -126,7 +126,7 @@ export class UserCommand extends Command {
       title = 'Ok tankkaa sitä kiisseliä vaikka sitten. Onnea verojen maksamisessa.'
     }
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setTitle(title)
       .setDescription(
         'Tuossa näkyy 95 ja kiisselin hinnat. Ekana kaksi halvinta viimeisenä kallein.'
@@ -143,11 +143,11 @@ export class UserCommand extends Command {
     //   }
     // })
 
-    const row1 = new MessageActionRow().addComponents(
-      new MessageButton()
+    const row1 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+      new ButtonBuilder()
         .setCustomId('tankille:listGas')
         .setLabel('Näytä koko lista')
-        .setStyle('SECONDARY')
+        .setStyle(ButtonStyle.Secondary)
     )
 
     // const row2 = new MessageActionRow().addComponents(

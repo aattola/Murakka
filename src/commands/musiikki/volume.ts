@@ -4,7 +4,7 @@ import { Command } from '@sapphire/framework'
 @ApplyOptions<Command.Options>({
   name: 'volume',
   description: 'Mitä? Voluumia vaihdellaan? 5-200',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel', 'isPlaying']
 })
 export class VolumeCommand extends Command {
@@ -26,7 +26,7 @@ export class VolumeCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const queue = this.container.player.getQueue(interaction.guild!)
     const volume = interaction.options.getInteger('voluumi')!
 

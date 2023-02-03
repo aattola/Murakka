@@ -24,7 +24,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     if (interaction.user.id === '709644495351840779') {
       await interaction.deferReply({ ephemeral: true })
 

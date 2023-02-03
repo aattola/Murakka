@@ -1,10 +1,11 @@
 import {
   ButtonInteraction,
   Interaction,
-  MessageActionRow,
-  MessageButton,
-  MessageSelectMenu,
-  SelectMenuInteraction
+  ActionRowBuilder,
+  SelectMenuInteraction,
+  ButtonBuilder,
+  SelectMenuBuilder,
+  ButtonStyle
 } from 'discord.js'
 
 async function vaihdaRegion(interaction: Interaction, region?: string) {
@@ -19,24 +20,22 @@ async function vaihdaRegion(interaction: Interaction, region?: string) {
   await vc.setRTCRegion(uusiRegion)
 }
 
-async function handleRegionValintaSelectMenu(
-  interaction: SelectMenuInteraction
-) {
+async function handleRegionValintaSelectMenu(interaction: SelectMenuInteraction) {
   if (!interaction.inCachedGuild())
     throw new Error('Friikki ei guildia error (ei pitäs olla mahdollista)')
   const vc = interaction.member.voice.channel!
   const region = interaction.values[0]
 
-  const componentRow2 = new MessageActionRow().addComponents([
-    new MessageButton()
+  const componentRow2 = new ActionRowBuilder<ButtonBuilder>().addComponents([
+    new ButtonBuilder()
       .setLabel('Tää oli huono idea vaiha takas nyt äkkiä.')
       .setCustomId('cr:choice')
       .setEmoji('717842037440905286')
-      .setStyle('SECONDARY'),
-    new MessageButton()
+      .setStyle(ButtonStyle.Secondary),
+    new ButtonBuilder()
       .setLabel('Done')
       .setCustomId('cr:removeMessage')
-      .setStyle('SECONDARY')
+      .setStyle(ButtonStyle.Secondary)
   ])
 
   await vaihdaRegion(interaction, region)
@@ -85,18 +84,18 @@ function regionValintaDropdown(interaction: ButtonInteraction) {
     }
   ]
 
-  const row = new MessageActionRow().addComponents(
-    new MessageSelectMenu()
+  const row = new ActionRowBuilder<SelectMenuBuilder>().addComponents(
+    new SelectMenuBuilder()
       .setCustomId('cr:choiceMenu')
       .setPlaceholder('Valitse todella tarkkaan')
       .addOptions(options)
   )
 
-  const row2 = new MessageActionRow().addComponents(
-    new MessageButton()
+  const row2 = new ActionRowBuilder<ButtonBuilder>().addComponents(
+    new ButtonBuilder()
       .setLabel('Ei sittenkään')
       .setCustomId('cr:removeMessage')
-      .setStyle('SECONDARY')
+      .setStyle(ButtonStyle.Secondary)
   )
 
   void interaction.update({

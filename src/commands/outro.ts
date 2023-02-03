@@ -7,7 +7,7 @@ import { QueryType } from 'discord-player'
 @ApplyOptions<Command.Options>({
   name: 'outro',
   description: 'Lähde pois puhelusta tyylillä.',
-  requiredClientPermissions: ['MOVE_MEMBERS'],
+  requiredClientPermissions: ['Connect'],
   preconditions: ['GuildOnly'],
   cooldownDelay: Time.Second * 25,
   cooldownFilteredUsers: ['214760917810937856']
@@ -25,7 +25,7 @@ export class OutroCommand extends Command {
       { idHints: ['1050407665207087214'] }
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const { player } = container
     await interaction.deferReply({ ephemeral: true })
 

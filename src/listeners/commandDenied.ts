@@ -1,9 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators'
-import type {
-  ChatInputCommandDeniedPayload,
-  ListenerOptions,
-  UserError
-} from '@sapphire/framework'
+import type { ChatInputCommandDeniedPayload, ListenerOptions, UserError } from '@sapphire/framework'
 import { Listener } from '@sapphire/framework'
 import humanize from 'humanize-duration'
 

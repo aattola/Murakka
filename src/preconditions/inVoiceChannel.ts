@@ -16,16 +16,15 @@ export class InVoiceChannelPrecondition extends Precondition {
         context: { ephemeral: true }
       })
 
-    if (!interaction.guild.me)
+    if (!interaction.guild.members.me)
       return this.error({
         message: 'Friikki itsetuntemus häiriö',
         context: { ephemeral: true }
       })
 
     if (
-      interaction.guild.me.voice.channelId &&
-      interaction.member.voice.channelId !==
-        interaction.guild.me.voice.channelId
+      interaction.guild.members.me.voice.channelId &&
+      interaction.member.voice.channelId !== interaction.guild.members.me.voice.channelId
     )
       return this.error({
         message: 'Et ole samalla kanavalla haloo',

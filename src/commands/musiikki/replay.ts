@@ -5,7 +5,7 @@ import { haeJaSoita } from '../../player/soittaminen'
 @ApplyOptions<Command.Options>({
   name: 'replay',
   description: 'Mitä? Soitetaan uudelleen äskeinen. Hyvä idea',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel']
 })
 export class ReplayCommand extends Command {
@@ -18,7 +18,7 @@ export class ReplayCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const lastPlayedId: string | null = await this.container.keyv.get(
       `${interaction.guild!.id}:lastPlayed`
     )

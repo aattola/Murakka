@@ -3,6 +3,7 @@ import { getHourly } from '@jeffe/nordpool'
 import { container } from '@sapphire/framework'
 import { logger } from '../logger'
 import { DateTime } from 'luxon'
+import { ActivityType } from 'discord.js'
 
 async function setCustomStatus() {
   const res = await getHourly({
@@ -23,7 +24,9 @@ async function setCustomStatus() {
 
   if (!currPrice) return console.log('Ei löytynyt hintaa. Mikä meni rikki?')
 
-  container.client.user?.setActivity(`Sähkö ${currPrice.price} c/kWh`, { type: 'WATCHING' })
+  container.client.user?.setActivity(`Sähkö ${currPrice.price} c/kWh`, {
+    type: ActivityType.Watching
+  })
 }
 
 export function initNordpool() {

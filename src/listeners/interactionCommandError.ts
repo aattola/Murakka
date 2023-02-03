@@ -8,9 +8,9 @@ import {
 } from '@sapphire/framework'
 import { ButtonInteraction, DiscordAPIError, HTTPError, SelectMenuInteraction } from 'discord.js'
 import { codeBlock, userMention } from '@discordjs/builders'
-import { RESTJSONErrorCodes } from 'discord-api-types/v10'
+// import { RESTJSONErrorCodes } from 'discord-api-types/v10'
 
-const ignoredCodes = [RESTJSONErrorCodes.UnknownChannel, RESTJSONErrorCodes.UnknownMessage]
+// const ignoredCodes = [RESTJSONErrorCodes.UnknownChannel, RESTJSONErrorCodes.UnknownMessage]
 
 @ApplyOptions<ListenerOptions>({
   event: 'interactionHandlerError'
@@ -90,9 +90,9 @@ export class CommandErrorListener extends Listener<typeof Events.InteractionHand
       }
 
       if (error instanceof DiscordAPIError || error instanceof HTTPError) {
-        if (ignoredCodes.includes(error.code)) {
-          return
-        }
+        // if (ignoredCodes.includes(error.code)) {
+        //   return
+        // }
 
         await this.reply(interaction, this.generateUnexpectedErrorMessage(interaction, error))
         client.emit(Events.Error, error)

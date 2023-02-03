@@ -5,7 +5,7 @@ import { nytSoiViesti } from '../../player/soittaminen'
 @ApplyOptions<Command.Options>({
   name: 'np',
   description: 'Mitä nyt soi?',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel', 'isPlaying']
 })
 export class NowPlayingCommand extends Command {
@@ -16,7 +16,7 @@ export class NowPlayingCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const queue = this.container.player.getQueue(interaction.guild!)
 
     const nowPlaying = queue.nowPlaying()

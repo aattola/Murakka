@@ -25,7 +25,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     await interaction.deferReply({ ephemeral: true })
     if (!interaction.inCachedGuild()) throw new Error('Rare en tunne guildia error')
 

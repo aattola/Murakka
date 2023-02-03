@@ -1,11 +1,11 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import { Command } from '@sapphire/framework'
-import { MessageEmbed } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 
 @ApplyOptions<Command.Options>({
   name: 'queue',
   description: 'Mitä jonossa on?',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel', 'isPlaying']
 })
 export class QueueCommand extends Command {
@@ -16,7 +16,7 @@ export class QueueCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const queue = this.container.player.getQueue(interaction.guild!)
 
     const nowPlaying = queue.nowPlaying()
@@ -27,7 +27,7 @@ export class QueueCommand extends Command {
       }
     })
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
       .setColor('#c5e463')
       .setURL(nowPlaying.url)
       .setTitle(nowPlaying.title)

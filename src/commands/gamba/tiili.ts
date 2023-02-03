@@ -18,7 +18,9 @@ export class TiliCommand extends Command {
     )
   }
 
-  public override async chatInputRun(interaction: Command.ChatInputInteraction): Promise<any> {
+  public override async chatInputRun(
+    interaction: Command.ChatInputCommandInteraction
+  ): Promise<any> {
     await interaction.deferReply({ ephemeral: false })
 
     const tili = await container.prisma.rahatilanne.findMany({

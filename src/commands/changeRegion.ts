@@ -1,6 +1,6 @@
 import { ApplyOptions } from '@sapphire/decorators'
 import { Command } from '@sapphire/framework'
-import { MessageActionRow, MessageButton } from 'discord.js'
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from 'discord.js'
 
 @ApplyOptions<Command.Options>({
   name: 'changeregion',
@@ -19,7 +19,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     if (!interaction.inCachedGuild())
       throw new Error('Friikki ei guildia error (ei pitäs olla mahdollista)')
 
@@ -29,13 +29,16 @@ export class UserCommand extends Command {
     const uusiRegion = vc.rtcRegion == 'rotterdam' ? 'russia' : 'rotterdam'
     await vc.setRTCRegion(uusiRegion)
 
-    const componentRow = new MessageActionRow().addComponents([
-      new MessageButton()
+    const componentRow = new ActionRowBuilder<ButtonBuilder>().addComponents([
+      new ButtonBuilder()
         .setLabel('Anna mun valita')
         .setCustomId('cr:choice')
         .setEmoji('762312767624708108')
-        .setStyle('SECONDARY'),
-      new MessageButton().setLabel('Done').setCustomId('cr:removeMessage').setStyle('SECONDARY')
+        .setStyle(ButtonStyle.Primary),
+      new ButtonBuilder()
+        .setLabel('Done')
+        .setCustomId('cr:removeMessage')
+        .setStyle(ButtonStyle.Secondary)
     ])
 
     return interaction.followUp({

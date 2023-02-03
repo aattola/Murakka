@@ -19,7 +19,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public async contextMenuRun(interaction: Command.ContextMenuInteraction) {
+  public async contextMenuRun(interaction: Command.ContextMenuCommandInteraction) {
     await block(interaction)
   }
 }

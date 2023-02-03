@@ -5,7 +5,7 @@ import { Command } from '@sapphire/framework'
   name: 'purge',
   description: 'Tuskin sinulla on oikeuksia tähän joten älä edes yritä',
   preconditions: ['GuildOnly', 'isOwner'],
-  requiredClientPermissions: ['VIEW_CHANNEL', 'MANAGE_MESSAGES']
+  requiredClientPermissions: ['ViewChannel', 'ManageMessages']
 })
 export class UserCommand extends Command {
   public override registerApplicationCommands(registry: Command.Registry) {
@@ -28,7 +28,7 @@ export class UserCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     await interaction.deferReply({ ephemeral: true })
     if (!interaction.inCachedGuild()) throw new Error('Rare en tunne guildia error')
 

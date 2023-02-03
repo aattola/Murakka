@@ -13,6 +13,8 @@ import '@sentry/tracing'
 import * as Tracing from '@sentry/tracing'
 import { ProfilingIntegration } from '@sentry/profiling-node'
 
+import { GatewayIntentBits } from 'discord.js'
+
 dotenv.config()
 
 declare module '@sapphire/pieces' {
@@ -22,7 +24,11 @@ declare module '@sapphire/pieces' {
 }
 
 const client = new SapphireClient({
-  intents: ['GUILDS', 'GUILD_MESSAGES', 'GUILD_VOICE_STATES'],
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.GuildVoiceStates
+  ],
   loadDefaultErrorListeners: false,
   presence: {
     status: 'online'

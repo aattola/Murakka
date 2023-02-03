@@ -6,7 +6,7 @@ import { haeJaSoita } from '../../player/soittaminen'
 @ApplyOptions<Command.Options>({
   name: 'soita',
   description: 'Soita musiikkia tästä',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel'],
   cooldownDelay: Time.Second * 5,
   cooldownFilteredUsers: ['214760917810937856']
@@ -29,7 +29,7 @@ export class SoitaCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     await interaction.deferReply({ ephemeral: true })
 
     let hakusana = interaction.options.getString('hakusana')!

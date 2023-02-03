@@ -1,10 +1,10 @@
-import { CommandInteraction, GuildTextBasedChannel, MessageEmbed } from 'discord.js'
+import { CommandInteraction, GuildTextBasedChannel, EmbedBuilder } from 'discord.js'
 import { container } from '@sapphire/framework'
 import { Player, Track } from 'discord-player'
 import playdl from 'play-dl'
 
-function nytSoiViesti(nowPlaying: Track): MessageEmbed {
-  return new MessageEmbed()
+function nytSoiViesti(nowPlaying: Track): EmbedBuilder {
+  return new EmbedBuilder()
     .setColor('#c5e463')
     .setURL(nowPlaying.url)
     .setTitle(nowPlaying.title)

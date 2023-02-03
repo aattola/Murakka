@@ -4,7 +4,7 @@ import { Command } from '@sapphire/framework'
 @ApplyOptions<Command.Options>({
   name: 'skip',
   description: 'Ohita tämä roska biisi nyt äkkiä',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel', 'isPlaying']
 })
 export class SkipCommand extends Command {
@@ -18,7 +18,7 @@ export class SkipCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const queue = this.container.player.getQueue(interaction.guild!)
 
     queue.skip()

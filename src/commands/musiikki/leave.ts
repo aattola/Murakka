@@ -4,7 +4,7 @@ import { Command } from '@sapphire/framework'
 @ApplyOptions<Command.Options>({
   name: 'leave',
   description: 'Lähde nyt äkkiä pois kanavasta',
-  requiredClientPermissions: ['CONNECT', 'VIEW_CHANNEL'],
+  requiredClientPermissions: ['Connect', 'ViewChannel'],
   preconditions: ['GuildOnly', 'inVoiceChannel', 'isPlaying']
 })
 export class LeaveCommand extends Command {
@@ -18,7 +18,7 @@ export class LeaveCommand extends Command {
     )
   }
 
-  public async chatInputRun(interaction: Command.ChatInputInteraction) {
+  public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
     const queue = this.container.player.getQueue(interaction.guild!)
 
     queue.clear()

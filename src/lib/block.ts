@@ -1,5 +1,5 @@
 import { IBlocked } from './block.d'
-import type { CommandInteraction, ContextMenuInteraction, Message } from 'discord.js'
+import type { CommandInteraction, Message } from 'discord.js'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import getUrls from 'extract-urls'
@@ -121,7 +121,7 @@ export async function removeBlock(hash: string, md5bool: boolean, userId: string
   return res.count
 }
 
-export function block(interaction: CommandInteraction | ContextMenuInteraction) {
+export function block(interaction: CommandInteraction) {
   if (!permissions.includes(interaction.user.id)) return interaction.reply('Mietis nyt vähän.')
 
   const value = interaction.options.get('message')
