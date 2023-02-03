@@ -1,5 +1,5 @@
 import { InteractionHandler, InteractionHandlerTypes, PieceContext } from '@sapphire/framework'
-import type { ButtonInteraction } from 'discord.js'
+import type { ButtonInteraction, EmbedField } from 'discord.js'
 import { tankille } from '../init/tankille'
 import { EmbedBuilder } from 'discord.js'
 
@@ -45,25 +45,30 @@ export class TankilleButtons extends InteractionHandler {
         return aPrice - bPrice
       })
 
-      const listaaaa = sorted.map((asema) => {
+      const lista = sorted.map((asema) => {
         const ysiviisHinta = asema.price.filter((fuel) => fuel.tag === '95')[0]
         const dieselHinta = asema.price.filter((fuel) => fuel.tag === 'dsl')[0]
 
-        return {
+        const oneAsema: EmbedField = {
           name: asema.name,
           value: `95: ${ysiviisHinta ? ysiviisHinta.price : 'Ei löytynyt'} Diesel: ${
             dieselHinta ? dieselHinta.price : 'Ei löytynyt'
-          }`
+          }`,
+          inline: false
         }
+
+        return oneAsema
       })
+
+      const lista25 = lista.slice(0, 25)
 
       const embed = new EmbedBuilder()
         .setTitle('Tankille')
         .setDescription(
-          'Tuossa näkyy 95 ja kiisselin hinnat. Listana tälläkertaa. Lajiteltu 95 hinnan perusteella halvimmasta kalleimpaan.'
+          'Tuossa näkyy 95 ja kiisselin hinnat. Listana tälläkertaa. Lajiteltu 95 hinnan perusteella halvimmasta kalleimpaan. Vain 25 viisi halvinta listattu koska discord ei salli enempää. :)'
         )
-        .addFields(listaaaa)
-        .setTimestamp()
+        .addFields(lista25)
+        .setTimestamp(new Date())
         .setFooter({ text: 'Tankkausbotti' })
 
       await interaction.editReply({
