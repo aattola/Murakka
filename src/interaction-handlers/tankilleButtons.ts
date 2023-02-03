@@ -65,7 +65,7 @@ export class TankilleButtons extends InteractionHandler {
       const embed = new EmbedBuilder()
         .setTitle('Tankille')
         .setDescription(
-          'Tuossa näkyy 95 ja kiisselin hinnat. Listana tälläkertaa. Lajiteltu 95 hinnan perusteella halvimmasta kalleimpaan. Vain 25 viisi halvinta listattu koska discord ei salli enempää. :)'
+          'Tuossa näkyy 95 ja kiisselin hinnat. Listana tälläkertaa. Lajiteltu 95 hinnan perusteella halvimmasta kalleimpaan. Vain 25 halvinta listattu koska discord ei salli enempää. :)'
         )
         .addFields(lista25)
         .setTimestamp(new Date())
