@@ -1,7 +1,7 @@
 import { InteractionHandler, InteractionHandlerTypes, PieceContext } from '@sapphire/framework'
 import type { ButtonInteraction } from 'discord.js'
 import { tankille } from '../init/tankille'
-import { MessageEmbed } from 'discord.js'
+import { EmbedBuilder } from 'discord.js'
 
 export class TankilleButtons extends InteractionHandler {
   public constructor(ctx: PieceContext, options: InteractionHandler.Options) {
@@ -57,7 +57,7 @@ export class TankilleButtons extends InteractionHandler {
         }
       })
 
-      const embed = new MessageEmbed()
+      const embed = new EmbedBuilder()
         .setTitle('Tankille')
         .setDescription(
           'Tuossa näkyy 95 ja kiisselin hinnat. Listana tälläkertaa. Lajiteltu 95 hinnan perusteella halvimmasta kalleimpaan.'
