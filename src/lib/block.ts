@@ -28,8 +28,9 @@ export async function checkMessage(message: Message) {
   }
 
   for (const url of [...urls]) {
+    const hash = md5(url)
+
     for (const blockedObj of blocked) {
-      const hash = md5(url)
       if (blockedObj.hash !== hash) continue
 
       void message.delete()
