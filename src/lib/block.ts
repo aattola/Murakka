@@ -65,7 +65,7 @@ export async function checkMessage(message: Message) {
             .remove(role)
             .catch(() => container.logger.warn('Roolin anto ei onnistunut, Perm diff.'))
           // 1min
-        }, 1000 * 60 * 5)
+        }, 1000 * 60 * 1)
       }
 
       dmChan
