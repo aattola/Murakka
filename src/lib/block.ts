@@ -55,13 +55,17 @@ export async function checkMessage(message: Message) {
         if (!role) return container.logger.warn('Roolia ei löytynyt')
         if (!message.inGuild()) return
 
-        await message.member?.roles.add(role)
+        await message.member?.roles
+          .add(role)
+          .catch(() => container.logger.warn('Roolin anto ei onnistunut, Perm diff.'))
 
         setTimeout(() => {
           if (!message.member?.roles.cache.has(role.id)) return
-          void message.member?.roles.remove(role)
+          void message.member?.roles
+            .remove(role)
+            .catch(() => container.logger.warn('Roolin anto ei onnistunut, Perm diff.'))
           // 1min
-        }, 1000 * 60)
+        }, 1000 * 60 * 5)
       }
 
       dmChan
