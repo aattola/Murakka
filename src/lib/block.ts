@@ -63,9 +63,9 @@ export async function checkMessage(message: Message) {
           if (!message.member?.roles.cache.has(role.id)) return
           void message.member?.roles
             .remove(role)
-            .catch(() => container.logger.warn('Roolin anto ei onnistunut, Perm diff.'))
+            .catch(() => container.logger.warn('Roolin pois ottaminen ei onnistunut, Perm diff.'))
           // 1min
-        }, 1000 * 60 * 1)
+        }, 1000 * 60)
       }
 
       dmChan
