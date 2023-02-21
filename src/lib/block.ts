@@ -18,6 +18,8 @@ const permissions: string[] = [
   '230289238455746560' // topias
 ]
 
+const erityinenGuild = '229499178018013184'
+
 export async function checkMessage(message: Message) {
   if (message.author.bot || message.thread || !message.guild) return
 
@@ -46,6 +48,20 @@ export async function checkMessage(message: Message) {
         void message.member
           ?.timeout(banTime, 'Postasi cringeä')
           .catch(() => container.logger.warn('Timeout ei onnistunut todennäköisesti PERM diff'))
+      }
+
+      if (erityinenGuild === message.guild.id) {
+        const role = message.guild.roles.cache.get('709324211889373255')
+        if (!role) return container.logger.warn('Roolia ei löytynyt')
+        if (!message.inGuild()) return
+
+        await message.member?.roles.add(role)
+
+        setTimeout(() => {
+          if (!message.member?.roles.cache.has(role.id)) return
+          void message.member?.roles.remove(role)
+          // 1min
+        }, 1000 * 60)
       }
 
       dmChan
