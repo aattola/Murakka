@@ -60,7 +60,6 @@ export async function checkMessage(message: Message) {
           .catch(() => container.logger.warn('Roolin anto ei onnistunut, Perm diff.'))
 
         setTimeout(() => {
-          if (!message.member?.roles.cache.has(role.id)) return
           void message.member?.roles
             .remove(role)
             .catch(() => container.logger.warn('Roolin pois ottaminen ei onnistunut, Perm diff.'))
