@@ -8,7 +8,7 @@ const configuration = new Configuration({
 
 const options = {
   temperature: 0.7, // OpenAI parameter
-  max_tokens: 100, // OpenAI parameter [Max response size by tokens]
+  max_tokens: 500, // OpenAI parameter [Max response size by tokens]
   top_p: 0.9, // OpenAI parameter
   frequency_penalty: 0, // OpenAI parameter
   presence_penalty: 0, // OpenAI parameter
