@@ -1,7 +1,6 @@
 import { CommandInteraction, GuildTextBasedChannel, EmbedBuilder } from 'discord.js'
 import { container } from '@sapphire/framework'
 import { Player, Track } from 'discord-player'
-import playdl from 'play-dl'
 
 function nytSoiViesti(nowPlaying: Track): EmbedBuilder {
   return new EmbedBuilder()
@@ -9,7 +8,7 @@ function nytSoiViesti(nowPlaying: Track): EmbedBuilder {
     .setURL(nowPlaying.url)
     .setTitle(nowPlaying.title)
     .setAuthor({
-      name: `Nyt soi! Pyytäjä: ${nowPlaying.requestedBy.username}`
+      name: `Nyt soi! Pyytäjä: ${nowPlaying.requestedBy?.username}`
     })
     .setThumbnail(nowPlaying.thumbnail)
 }
@@ -21,7 +20,7 @@ function parseYoutubeUrl(url: string): string | false {
 }
 
 function initSoittaminen(player: Player) {
-  player.on('trackStart', (queue, track) => {
+  player.events.on('playerStart', (queue, track) => {
     const metadata = queue.metadata as { channel: GuildTextBasedChannel; silent?: boolean }
 
     if (metadata.silent) return
@@ -33,16 +32,16 @@ function initSoittaminen(player: Player) {
     void container.keyv.set(`${metadata.channel.guildId}:lastPlayed`, id)
   })
 
-  player.on('connectionError', (queue, error) => {
+  player.events.on('playerError', (queue, error) => {
     const metadata = queue.metadata as { channel: GuildTextBasedChannel }
 
     void metadata.channel.send(
       `Virhe tapahtui musiikkia soitettaessa: ${error.message}. Siirryn automaattisesti seuraavaan videoon.`
     )
-    queue.skip()
+    queue.node.skip()
   })
 
-  player.on('error', (queue, error) => {
+  player.events.on('error', (queue, error) => {
     container.logger.error(`[DiscordPlayer] Error`, error, queue.guild.id)
   })
 }
@@ -52,25 +51,30 @@ async function haeJaSoita(interaction: CommandInteraction, hakusana: string) {
     throw new Error('Friikki ei guildia error (ei pitäs olla mahdollista)')
   const { player } = container
 
-  const queue = player.createQueue(interaction.guild, {
+  const queue = player.nodes.create(interaction.guild, {
     metadata: {
       channel: interaction.channel
     },
     leaveOnEmpty: true,
     leaveOnEnd: true,
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    async onBeforeCreateStream(track, source) {
-      if (source === 'youtube') {
-        return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream
-      }
-    }
+    leaveOnStop: true,
+    leaveOnEmptyCooldown: 5000,
+    leaveOnEndCooldown: 1000,
+    selfDeaf: true,
+    volume: 20
+    // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // // @ts-ignore
+    // async onBeforeCreateStream(track, source) {
+    //   if (source === 'youtube') {
+    //     return (await playdl.stream(track.url, { discordPlayerCompatibility: true })).stream
+    //   }
+    // }
   })
 
   try {
     if (!queue.connection) await queue.connect(interaction.member.voice.channel!)
   } catch {
-    queue.destroy()
+    queue.delete()
     return await interaction.followUp({
       content: 'Hei ukko en pystynyt liittymään kanavallesi',
       ephemeral: true
@@ -89,8 +93,7 @@ async function haeJaSoita(interaction: CommandInteraction, hakusana: string) {
       ephemeral: true
     })
 
-  queue.setVolume(20)
-  await queue.play(track)
+  await queue.node.play(track)
 
   return await interaction.followUp({
     content: `Ladataan ${track.title}`,

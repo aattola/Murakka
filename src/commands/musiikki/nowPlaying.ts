@@ -17,9 +17,11 @@ export class NowPlayingCommand extends Command {
   }
 
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    const queue = this.container.player.getQueue(interaction.guild!)
+    const queue = this.container.player.nodes.get(interaction.guild!)!
 
-    const nowPlaying = queue.nowPlaying()
+    const nowPlaying = queue.currentTrack
+    if (!nowPlaying) return interaction.reply({ content: 'Nyt ei soi mitään', ephemeral: true })
+
     const embed = nytSoiViesti(nowPlaying)
 
     return await interaction.reply({

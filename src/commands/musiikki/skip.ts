@@ -19,9 +19,9 @@ export class SkipCommand extends Command {
   }
 
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    const queue = this.container.player.getQueue(interaction.guild!)
+    const queue = this.container.player.nodes.get(interaction.guild!)!
 
-    queue.skip()
+    queue.node.skip()
 
     return await interaction.reply({
       content: 'Skippasin videon nopeasti ja tehokkaasti.',

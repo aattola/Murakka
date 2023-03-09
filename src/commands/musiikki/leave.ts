@@ -19,10 +19,10 @@ export class LeaveCommand extends Command {
   }
 
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    const queue = this.container.player.getQueue(interaction.guild!)
+    const queue = this.container.player.nodes.get(interaction.guild!)!
 
-    queue.clear()
-    queue.destroy(true)
+    queue.tracks.clear()
+    queue.delete()
 
     return await interaction.reply({
       content: 'Lähdin pois kanavasta nopeasti ja tehokkaasti.',

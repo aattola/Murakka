@@ -17,12 +17,14 @@ export class QueueCommand extends Command {
   }
 
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    const queue = this.container.player.getQueue(interaction.guild!)
+    const queue = this.container.player.nodes.get(interaction.guild!)!
 
-    const nowPlaying = queue.nowPlaying()
+    const nowPlaying = queue.currentTrack
+    if (!nowPlaying) return interaction.reply({ content: 'Nyt ei soi mitään', ephemeral: true })
+
     const list = queue.tracks.map((track, index) => {
       return {
-        name: `${index + 1} Pyytäjä: ${track.requestedBy.username}`,
+        name: `${index + 1} Pyytäjä: ${track.requestedBy?.username}`,
         value: `[${track.title}](${track.url})`
       }
     })
@@ -32,7 +34,7 @@ export class QueueCommand extends Command {
       .setURL(nowPlaying.url)
       .setTitle(nowPlaying.title)
       .setAuthor({
-        name: `Nyt soi! Pyytäjä: ${nowPlaying.requestedBy.username}`
+        name: `Nyt soi! Pyytäjä: ${nowPlaying.requestedBy?.username}`
       })
       .setThumbnail(nowPlaying.thumbnail)
       .addFields(list)

@@ -27,10 +27,10 @@ export class VolumeCommand extends Command {
   }
 
   public async chatInputRun(interaction: Command.ChatInputCommandInteraction) {
-    const queue = this.container.player.getQueue(interaction.guild!)
+    const queue = this.container.player.nodes.get(interaction.guild!)!
     const volume = interaction.options.getInteger('voluumi')!
 
-    queue.setVolume(volume)
+    queue.node.setVolume(volume)
 
     return await interaction.reply({
       content: 'Asetin voluumin numeroon ' + volume,
