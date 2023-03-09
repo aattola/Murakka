@@ -1,7 +1,7 @@
 import cron from 'node-cron'
 import { getHourly } from '@jeffe/nordpool'
 import { container } from '@sapphire/framework'
-import { logger } from '../logger'
+// import { logger } from '../logger'
 import { DateTime } from 'luxon'
 import { ActivityType } from 'discord.js'
 
@@ -17,10 +17,10 @@ async function setCustomStatus() {
     return time.diffNow('minutes').toObject().minutes! > 30
   })
 
-  logger.info('setCustomStatus', {
-    res,
-    currPrice
-  })
+  // logger.info('setCustomStatus', {
+  //   res,
+  //   currPrice
+  // })
 
   if (!currPrice) return console.log('Ei löytynyt hintaa. Mikä meni rikki?')
 
