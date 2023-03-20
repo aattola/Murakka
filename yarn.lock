@@ -206,10 +206,10 @@
   resolved "https://registry.yarnpkg.com/@ioredis/commands/-/commands-1.2.0.tgz#6d61b3097470af1fdbbe622795b8921d42018e11"
   integrity sha512-Sx1pU8EM64o2BrqNpEO1CNLtKQwyhuXuqyfH7oGKCk+1a33d2r5saW8zNwm3j6BTExtjrv2BxTgzzkMwts6vGg==
 
-"@jeffe/nordpool@^2.1.0":
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/@jeffe/nordpool/-/nordpool-2.1.0.tgz#643b702df7858759ee988640de4f6bb6558d0761"
-  integrity sha512-FzLlomaQAFdSjmTzLmKhpDnqw7kkOQfLvdUT5T71WtO0PSmzCCjiybDyXqhU81G3q6xzktVgH4awsQpYjjPf/w==
+"@jeffe/nordpool@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@jeffe/nordpool/-/nordpool-2.1.1.tgz#620089da75f2a99dfbc2ef545d92d9359e6512eb"
+  integrity sha512-HUlZRW/OZk+P1SNipzKRKUA8sQz96iKg7bKqcEXoAvXVQiNSWxsp0qTbNITn77xCnfLiJmpEuKXCEjABdaEhUg==
   dependencies:
     axios "^0.27.2"
     luxon "^3.1.1"
