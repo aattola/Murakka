@@ -7,7 +7,6 @@ import {
 import type { ButtonInteraction } from 'discord.js'
 import { fetch } from 'undici'
 import { addHours, differenceInSeconds } from 'date-fns'
-import { logger } from '../logger'
 
 async function fetchGame(id: string) {
   const res = await fetch(`https://fifa.jeffe.co/peli/${id}`)
@@ -38,12 +37,12 @@ export class FifaBetButtons extends InteractionHandler {
       const stopTime = addHours(new Date(+timestamp * 1000), 0)
 
       const eroSekunneissa = differenceInSeconds(new Date(), stopTime)
-      logger.info('ero', {
-        stopTime,
-        date: new Date(+timestamp * 1000),
-        eroSekunneissa,
-        currd: new Date()
-      })
+      // logger.info('ero', {
+      //   stopTime,
+      //   date: new Date(+timestamp * 1000),
+      //   eroSekunneissa,
+      //   currd: new Date()
+      // })
 
       if (eroSekunneissa > 1800) {
         await interaction.editReply({
