@@ -34,7 +34,9 @@ export function initElixiaLoop() {
 
 export async function getElixiaDBLoop() {
   const visitorData = await getElixiaVisitors().catch(() => null)
-  if (visitorData === null) return
+  if (!visitorData) return
+  if (!visitorData.payload) return
+  if (!visitorData.payload.currentVisitorLoad) return
 
   const point = new Point('visitors')
     .tag('gym', '737')
