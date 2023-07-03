@@ -8,7 +8,7 @@ import { ActivityType } from 'discord.js'
 async function setCustomStatus() {
   const res = await getHourly({
     area: 'FI',
-    vat: 10,
+    vat: 24,
     timezone: 'Europe/Helsinki'
   })
 
