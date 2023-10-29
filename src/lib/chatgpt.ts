@@ -1,10 +1,6 @@
-import { Configuration, OpenAIApi } from 'openai'
+import { OpenAI } from 'openai'
 
 if (!process.env.OPENAI) throw new Error('OPENAI API key not found!')
-
-const configuration = new Configuration({
-  apiKey: process.env.OPENAI
-})
 
 const options = {
   temperature: 0.7, // OpenAI parameter
@@ -15,10 +11,12 @@ const options = {
   model: 'gpt-3.5-turbo' // OpenAI parameter  `gpt-3.5-turbo` is PAID
 }
 
-const openai = new OpenAIApi(configuration)
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI
+})
 
 export async function getPrompt(text: string): Promise<string> {
-  const resp = await openai.createChatCompletion({
+  const resp = await openai.chat.completions.create({
     ...options,
     messages: [
       {
@@ -29,11 +27,23 @@ export async function getPrompt(text: string): Promise<string> {
   })
 
   if (resp === null) return 'Virhe tapahtui'
-  if (resp.status !== 200) return 'Virhe tapahtui !==200'
 
-  const msg = resp.data.choices[0].message?.content
-
-  if (msg === undefined) return 'Virhe tapahtui (msg === undefined)'
+  const msg = resp.choices[0].message?.content
+  if (msg === undefined || msg === null) return 'Virhe tapahtui (msg === undefined)'
 
   return msg
+}
+
+export async function createImage(prompt: string) {
+  const resp = await openai.images.generate({
+    size: '256x256',
+    prompt,
+    n: 1,
+    response_format: 'url'
+  })
+
+  if (resp === null) return undefined
+  if (resp.data.length === 0) return undefined
+
+  return resp.data[0].url
 }
