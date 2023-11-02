@@ -36,7 +36,7 @@ export async function getPrompt(text: string): Promise<string> {
 
 export async function createImage(prompt: string) {
   const resp = await openai.images.generate({
-    size: '256x256',
+    size: '1024x1024',
     prompt,
     n: 1,
     response_format: 'url'
