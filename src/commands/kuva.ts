@@ -86,12 +86,12 @@ export class UserCommand extends Command {
       // @ts-ignore
       const buf = new Buffer.from(vastaus, 'base64')
       kuva = new AttachmentBuilder(buf, {
-        name: 'AI Generated kuva.png'
+        name: isFallback ? 'AI Generated kuva.png' : 'SPOILER_AIkuva.png'
       })
     }
 
     await interaction.editReply({
-      content: `> ${teksti} ${isFallback && '(OpenAI Generoima)'}`,
+      content: `> ${teksti} ${isFallback ? '(OpenAI Generoima)' : ''}`,
       files: [kuva]
     })
   }
