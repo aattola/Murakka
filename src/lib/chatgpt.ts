@@ -39,7 +39,8 @@ export async function createImage(prompt: string) {
     size: '1024x1024',
     prompt,
     n: 1,
-    response_format: 'url'
+    response_format: 'url',
+    model: "dall-e-3",
   })
 
   if (resp === null) return undefined
