@@ -19,10 +19,16 @@ const permissions: string[] = [
   '452107804723904512' // a
 ]
 
+const channelsToIgnore = [
+  "431115075571679242" // k-kanava
+]
+
 const erityinenGuild = '229499178018013184'
 
 export async function checkMessage(message: Message) {
   if (message.author.bot || message.thread || !message.guild) return
+
+  if (channelsToIgnore.includes(message.channel.id)) return // ignore channels
 
   const urls = getUrls(message.content)
 
