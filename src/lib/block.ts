@@ -20,7 +20,7 @@ const permissions: string[] = [
 ]
 
 const channelsToIgnore = [
-  "431115075571679242" // k-kanava
+  '431115075571679242' // k-kanava
 ]
 
 const erityinenGuild = '229499178018013184'
