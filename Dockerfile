@@ -1,4 +1,4 @@
-FROM node:17-alpine
+FROM node:18-alpine
 
 RUN apk add ffmpeg python3 opus g++ make libtool
 
