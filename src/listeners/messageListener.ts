@@ -1,5 +1,5 @@
 import { ApplyOptions } from '@sapphire/decorators'
-import { container, Events, Listener, ListenerOptions } from '@sapphire/framework'
+import { container, Listener, ListenerOptions } from '@sapphire/framework'
 import { Message } from 'discord.js'
 import { checkMessage } from '../lib/block'
 import { handleKonna } from '../lib/konna'
