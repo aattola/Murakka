@@ -60,12 +60,14 @@ export class UserCommand extends Command {
     const teksti = interaction.options.getString('teksti')!
 
     // const vastaus = await createImage(teksti)
-    const vastaus = await this.fetchImage(teksti).catch(async () => {
-      return {
-        fallback: true,
-        image: await createImage(teksti)
-      }
-    })
+    // const vastaus = await this.fetchImage(teksti).catch(async () => {
+    //   return {
+    //     fallback: true,
+    //     image: await createImage(teksti)
+    //   }
+    // })
+
+    const vastaus = await createImage(teksti)
 
     if (vastaus === undefined) {
       return interaction.editReply({
@@ -73,25 +75,21 @@ export class UserCommand extends Command {
       })
     }
 
-    let kuva
-    let isFallback = false
-
-    if (typeof vastaus === 'object') {
-      isFallback = true
-      kuva = new AttachmentBuilder(vastaus.image!, {
-        name: 'AI Generated kuva.png'
-      })
-    } else {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const buf = new Buffer.from(vastaus, 'base64')
-      kuva = new AttachmentBuilder(buf, {
-        name: isFallback ? 'AI Generated kuva.png' : 'SPOILER_AIkuva.png'
-      })
-    }
+    //if (typeof vastaus === 'object') {
+    const kuva = new AttachmentBuilder(vastaus, {
+      name: 'AI Generated kuva.png'
+    })
+    // } else {
+    //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //   // @ts-ignore
+    //   const buf = new Buffer.from(vastaus, 'base64')
+    //   kuva = new AttachmentBuilder(buf, {
+    //     name: isFallback ? 'AI Generated kuva.png' : 'SPOILER_AIkuva.png'
+    //   })
+    // }
 
     await interaction.editReply({
-      content: `> ${teksti} ${isFallback ? '(OpenAI Generoima)' : ''}`,
+      content: `> ${teksti}`,
       files: [kuva]
     })
   }

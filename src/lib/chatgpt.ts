@@ -40,7 +40,7 @@ export async function createImage(prompt: string) {
     prompt,
     n: 1,
     response_format: 'url',
-    model: "dall-e-3",
+    model: 'dall-e-3'
   })
 
   if (resp === null) return undefined
