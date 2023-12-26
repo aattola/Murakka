@@ -1,13 +1,9 @@
-import {
-  InteractionHandler,
-  InteractionHandlerTypes,
-  LoaderPieceContext
-} from '@sapphire/framework'
+import { InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework'
 import type { SelectMenuInteraction } from 'discord.js'
 
 export class ChangeRegionSelectMenuHandler extends InteractionHandler {
-  public constructor(ctx: LoaderPieceContext, options: InteractionHandler.Options) {
-    super(<LoaderPieceContext<'interaction-handlers'>>ctx, {
+  public constructor(ctx: InteractionHandler.LoaderContext, options: InteractionHandler.Options) {
+    super(ctx, {
       ...options,
       interactionHandlerType: InteractionHandlerTypes.SelectMenu
     })

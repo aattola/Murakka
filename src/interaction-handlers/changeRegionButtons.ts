@@ -1,15 +1,10 @@
-import {
-  InteractionHandler,
-  InteractionHandlerTypes,
-  PieceContext,
-  UserError
-} from '@sapphire/framework'
+import { InteractionHandler, InteractionHandlerTypes, UserError } from '@sapphire/framework'
 import type { ButtonInteraction } from 'discord.js'
 import { Message } from 'discord.js'
 import { regionValintaDropdown } from '../lib/changeRegion'
 
 export class ChangeRegionButtonHandler extends InteractionHandler {
-  public constructor(ctx: PieceContext, options: InteractionHandler.Options) {
+  public constructor(ctx: InteractionHandler.LoaderContext, options: InteractionHandler.Options) {
     super(ctx, {
       ...options,
       interactionHandlerType: InteractionHandlerTypes.Button

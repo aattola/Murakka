@@ -1,14 +1,9 @@
-import {
-  InteractionHandler,
-  InteractionHandlerTypes,
-  PieceContext,
-  UserError
-} from '@sapphire/framework'
+import { InteractionHandler, InteractionHandlerTypes, UserError } from '@sapphire/framework'
 import type { SelectMenuInteraction } from 'discord.js'
 import { handleRegionValintaSelectMenu } from '../lib/changeRegion'
 
 export class ChangeRegionSelectMenuHandler extends InteractionHandler {
-  public constructor(ctx: PieceContext, options: InteractionHandler.Options) {
+  public constructor(ctx: InteractionHandler.LoaderContext, options: InteractionHandler.Options) {
     super(ctx, {
       ...options,
       interactionHandlerType: InteractionHandlerTypes.SelectMenu

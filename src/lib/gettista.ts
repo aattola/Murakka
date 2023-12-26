@@ -25,11 +25,11 @@ function gettistä(message: Message) {
   if (rNumber >= 95) {
     const row = new ActionRowBuilder<ButtonBuilder>().addComponents(
       new ButtonBuilder()
-        .setCustomId('komppaan')
+        .setCustomId('gettista:komppaan')
         .setStyle(ButtonStyle.Primary)
         .setLabel('Komppaan'),
       new ButtonBuilder()
-        .setCustomId('palautetta')
+        .setCustomId('gettista:palautetta')
         .setStyle(ButtonStyle.Secondary)
         .setLabel('Annan rakentavaa palautetta')
     )

@@ -1,9 +1,4 @@
-import {
-  container,
-  InteractionHandler,
-  InteractionHandlerTypes,
-  PieceContext
-} from '@sapphire/framework'
+import { container, InteractionHandler, InteractionHandlerTypes } from '@sapphire/framework'
 import type { ButtonInteraction } from 'discord.js'
 import { fetch } from 'undici'
 import { addHours, differenceInSeconds } from 'date-fns'
@@ -14,7 +9,7 @@ async function fetchGame(id: string) {
 }
 
 export class FifaBetButtons extends InteractionHandler {
-  public constructor(ctx: PieceContext, options: InteractionHandler.Options) {
+  public constructor(ctx: InteractionHandler.LoaderContext, options: InteractionHandler.Options) {
     super(ctx, {
       ...options,
       interactionHandlerType: InteractionHandlerTypes.Button
