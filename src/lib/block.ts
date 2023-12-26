@@ -46,7 +46,7 @@ export async function checkMessage(message: Message) {
 
       const dmChan = await message.author.createDM().catch(() => null)
 
-      const timeout = await container.keyv.get<true>('settings:timeoutBlocked')
+      const timeout = await container.keyv.get('settings:timeoutBlocked')
       if (timeout) {
         const time = await container.keyv.get('settings:timeoutBlockedTime')
         const currTime = Date.now()
