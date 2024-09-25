@@ -1,6 +1,6 @@
 FROM node:18-alpine
 
-RUN apk add ffmpeg python3 opus g++ make libtool
+RUN apk add ffmpeg python3=3.13 opus g++ make libtool
 RUN apk add --no-cache libc6-compat build-base gcc
 
 WORKDIR /usr/src/bot
