@@ -57,13 +57,13 @@ function gettistä(message: Message) {
 export async function handleGet(message: Message) {
   if (message.author.bot) return
 
-  if (message.content.toLowerCase().includes('ni11a'.replace('11', 'gg'))) {
-    if (message.author.bot) return
-    await message.reply({
-      content: `NYT OMPI SITÄ PEISETTIÄ JATKA SAMAAN MALLIIN POSTAAMISTA`,
-      files: ['https://i.imgur.com/Psqr2Hc.png']
-    })
-  }
+  // if (message.content.toLowerCase().includes('ni11a'.replace('11', 'gg'))) {
+  //   if (message.author.bot) return
+  //   await message.reply({
+  //     content: `NYT OMPI SITÄ PEISETTIÄ JATKA SAMAAN MALLIIN POSTAAMISTA`,
+  //     files: ['https://i.imgur.com/Psqr2Hc.png']
+  //   })
+  // }
 
   if (message.content.toLowerCase() === 'get') {
     // gettistä
