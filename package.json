@@ -22,7 +22,7 @@
     "@discordjs/builders": "^1.7.0",
     "@discordjs/opus": "^0.9.0",
     "@influxdata/influxdb-client": "^1.33.2",
-    "@jeffe/nordpool": "^2.1.1",
+    "@jeffe/nordpool": "^2.1.3",
     "@jeffe/tankille": "^1.1.4",
     "@keyv/redis": "^2.8.1",
     "@logtail/node": "^0.1.14",

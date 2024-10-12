@@ -381,10 +381,10 @@
     wrap-ansi "^8.1.0"
     wrap-ansi-cjs "npm:wrap-ansi@^7.0.0"
 
-"@jeffe/nordpool@^2.1.1":
-  version "2.1.1"
-  resolved "https://registry.yarnpkg.com/@jeffe/nordpool/-/nordpool-2.1.1.tgz#620089da75f2a99dfbc2ef545d92d9359e6512eb"
-  integrity sha512-HUlZRW/OZk+P1SNipzKRKUA8sQz96iKg7bKqcEXoAvXVQiNSWxsp0qTbNITn77xCnfLiJmpEuKXCEjABdaEhUg==
+"@jeffe/nordpool@^2.1.3":
+  version "2.1.3"
+  resolved "https://registry.yarnpkg.com/@jeffe/nordpool/-/nordpool-2.1.3.tgz#5ccc6ae153c885243c57893ebc68c2d5cbf0109a"
+  integrity sha512-j3yE2L2/8tYUFANi7eXgRy/ug+4StOBXYnL+9F2IcAPQ/Q7QA3JuLjD02W+kzdTeJY7LYxVJenCsEZFjAVAF4g==
   dependencies:
     axios "^0.27.2"
     luxon "^3.1.1"
