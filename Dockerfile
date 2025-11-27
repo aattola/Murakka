@@ -1,7 +1,7 @@
-FROM node:18-alpine
+FROM node:20-alpine
 
 RUN apk add ffmpeg python3 opus g++ make libtool py3-setuptools
-RUN apk add --no-cache libc6-compat build-base gcc
+RUN apk add --no-cache libc6-compat build-base gcc openssl
 
 WORKDIR /usr/src/bot
 COPY package.json ./
