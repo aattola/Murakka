@@ -3,7 +3,8 @@ import { Client } from '@jeffe/tankille'
 const tankille = new Client(
   {
     device: 'Pixel 7 Pro (f9a9b2d3d4251234)',
-    userAgent: 'FuelFellow/3.9.19 (null)'
+    userAgent: 'FuelFellow/3.9.19 (null)',
+    apiUrl: 'https://tankille-murakka-proxy-416452922840.europe-north1.run.app/'
   },
   { 'User-Agent': 'FuelFellow/3.9.19 (null)' }
 )
