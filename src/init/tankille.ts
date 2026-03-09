@@ -16,9 +16,10 @@ void tankille
     password
   })
   .catch((err) => {
-    console.error('Tankille login failed:')
-    console.dir(err, { depth: 999 })
-    console.error('Tankille login failed.')
+    console.error('Tankille login failed:', err)
+    console.log(err.response?.data || err.message)
+    console.log(err.reponse)
+    console.log(err.headers, 'header')
   })
 
 export { tankille }
