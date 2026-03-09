@@ -6,7 +6,7 @@ const tankille = new Client(
     userAgent: 'FuelFellow/3.9.19 (null)',
     apiUrl: 'https://tankille-murakka-proxy-416452922840.europe-north1.run.app/'
   },
-  { 'User-Agent': 'FuelFellow/3.9.19 (null)' }
+  { 'User-Agent': 'FuelFellow/3.9.19 (null)', 'Host': 'tankille-murakka-proxy-416452922840.europe-north1.run.app' }
 )
 
 if (!process.env.TANKILLEPASS) throw new Error('Ei tankille pass env olemassa')
