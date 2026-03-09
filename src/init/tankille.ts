@@ -7,9 +7,15 @@ const tankille = new Client({
 
 if (!process.env.TANKILLEPASS) throw new Error('Ei tankille pass env olemassa')
 const [email, password] = process.env.TANKILLEPASS.split(':')
-void tankille.login({
-  email,
-  password
-})
+void tankille
+  .login({
+    email,
+    password
+  })
+  .catch((err) => {
+    console.error('Tankille login failed:')
+    console.dir(err, { depth: 999 })
+    console.error('Tankille login failed.')
+  })
 
 export { tankille }
